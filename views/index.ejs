@@ -1,11 +1,96 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-  </head>
-  <body>
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
+  <html>
+    <head>
+      <meta charset="utf-8">
+      <title><%= title %></title>
+      <link rel='stylesheet' href='/stylesheets/style.css' />
+      <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
+      <link href="https://api.mapbox.com/mapbox-gl-js/v2.13.0/mapbox-gl.css" rel="stylesheet">
+      <script src="https://api.mapbox.com/mapbox-gl-js/v2.13.0/mapbox-gl.js"></script>
+      <script src='https://code.jquery.com/jquery-1.11.0.min.js'></script>
+      <style>
+        body {
+            margin: 0;
+            padding: 0;
+          }
+          
+          #map {
+            /* position: absolute; */
+            top: 0;
+            bottom: 0;
+            width: 900px;
+            height: 900px;
+          }
+          </style>
+</head>
+
+<body>
+  <h1><%= title %></h1>
+  <div>
+    <input id="long" type="text">
+    <input id="lat" type="text">
+        <button id="set">set</button>
+    </div>
+
+    <div id="map"></div>
+    <script>
+        /*
+        TODO: 
+            - render a map - done 
+            - add a marker to the map - done 
+            - dynamically add markers to the map - postponed (can't do this since we don't have any server logic)
+                - [instead] loop through a JS object which contains where the markers will go 
+                - add the marker to the map 
+            - allow the user to add a marker to the map on click of the button 
+                 Giacomo: at the moment the user will manually type their coordinates, later we'll get the coordinates via where the user clicked the map - done
+                - Patrick: add an html input field - done
+                - Patrick: add a html button - done
+                - when the user clicks button 
+                - get the content of the input field 
+                - update the markers array in the above JS object - in progress
+        */
+
+        mapboxgl.accessToken = 'pk.eyJ1IjoiYmgzMDAiLCJhIjoiY2xlaWpsZW91MDI0dDQxbnI4aWNueTVneiJ9.u0cO3o-dzacQpUpt2rxLtA';
+        // - render a map - done
+
+        const map = new mapboxgl.Map({
+            container: 'map', // container ID
+            // Choose from Mapbox's core styles, or make your own style with Mapbox Studio
+            style: 'mapbox://styles/mapbox/outdoors-v12', // style URL
+            center: [11.255, 43.77], // starting position
+            zoom: 13 // starting zoom
+
+        });
+        map.addControl(new mapboxgl.FullscreenControl());
+        //*********************************  
+        map.addControl(new mapboxgl.GeolocateControl({
+            positionOptions: {
+                enableHighAccuracy: true
+            },
+            // When active the map will receive updates to the device's location as it changes.
+            trackUserLocation: true,
+            // Draw an arrow next to the location dot to indicate which direction the device is heading.
+            showUserHeading: true
+        })
+        );
+
+        //let markerLocations = [[11.255, 43.77], [11.155, 43.74]]
+        let markers = []
+         map.on('click', e => {
+            const coordinates = e.lngLat;
+            markers.push(new mapboxgl.Marker({scale: 2 /* was hoping this reduced the "accidental marker add on marker click" */})
+            // how secure is setHTML? 
+                .setLngLat(coordinates).setPopup(new mapboxgl.Popup().setHTML(
+                        '<h1>user content</h1>' +
+                        '<button class="trigger">Report Litter</button>' +
+                        '<button class="trigger">Upload Photo</button>' +
+                        '<button class="trigger">Take Photo</button>' +
+                        '<button class="trigger">Litter Removed</button>'
+                    )
+                )
+                .addTo(map));
+                markers.map(marker => marker.togglePopup())
+        });
+    </script>
   </body>
 </html>

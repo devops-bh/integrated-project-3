@@ -8,6 +8,9 @@
       <link href="https://api.mapbox.com/mapbox-gl-js/v2.13.0/mapbox-gl.css" rel="stylesheet">
       <script src="https://api.mapbox.com/mapbox-gl-js/v2.13.0/mapbox-gl.js"></script>
       <script src='https://code.jquery.com/jquery-1.11.0.min.js'></script>
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
       <style>
 
         body {
@@ -26,16 +29,55 @@
 
           
           
-          </style>
+      </style>
+
 </head>
 
 <body>
-  <h1><%= title %></h1>
+
+
+
   <div>
+    <!--**************************menu bar****************************************-->
+    <!-- Sidebar/menu -->
+    <nav class="w3-sidebar w3-bar-block w3-black w3-animate-right w3-top w3-text-light-grey w3-large" style="z-index:3;width:250px;font-weight:bold;display:none;right:0;" id="mySidebar">
+      <a href="javascript:void()" onclick="getLocation(), w3_close()" class="w3-bar-item w3-button w3-center w3-padding-32">MARK PLACE</a> 
+      <a href="#" onclick="w3_close()" class="w3-bar-item w3-button w3-center w3-padding-16">User</a> 
+      <a href="#Blog" onclick="w3_close()" class="w3-bar-item w3-button w3-center w3-padding-16">Blog</a> 
+      <a href="#contact" onclick="w3_close()" class="w3-bar-item w3-button w3-center w3-padding-16">Contact</a>
+    </nav>
+
+    <!-- Top menu on small screens -->
+    <header class="w3-container w3-top w3-white w3-xlarge w3-padding-16">
+    <span class="w3-left w3-padding">LITTER MAP</span>
+    <a href="javascript:void(0)" class="w3-right w3-button w3-white" onclick="w3_open()">☰</a>
+</header>
+
+    <!-- Overlay effect when opening sidebar on small screens -->
+    <div class="w3-overlay w3-animate-opacity" onclick="w3_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
+
+    <script>
+      // Script to open and close sidebar
+
+      function w3_open() {
+        document.getElementById("mySidebar").style.display = "block";
+        document.getElementById("myOverlay").style.display = "block";
+      }
+  
+      function w3_close() {
+      document.getElementById("mySidebar").style.display = "none";
+      document.getElementById("myOverlay").style.display = "none";
+    }
+  </script> 
+  </div>
+  <!--**************************End Menu Bar****************************************-->
+
+  <div>
+
     <input id="long" type="text">
     <input id="lat" type="text">
-        <button id="set">set</button>
-    </div>
+    <button id="set">set</button>
+  </div>
 
     <div id="map"></div>
     <script>
@@ -47,7 +89,7 @@
                 - [instead] loop through a JS object which contains where the markers will go 
                 - add the marker to the map 
             - allow the user to add a marker to the map on click of the button 
-                 Giacomo: at the moment the user will manually type their coordinates, later we'll get the coordinates via where the user clicked the map - done
+                - Giacomo: at the moment the user will manually type their coordinates, later we'll get the coordinates via where the user clicked the map - done
                 - Patrick: add an html input field - done
                 - Patrick: add a html button - done
                 - when the user clicks button 
@@ -67,6 +109,7 @@
 
         });
         map.addControl(new mapboxgl.FullscreenControl());
+        map.addControl(new mapboxgl.NavigationControl());//add zoom controllers and rotation
         //*********************************  
         map.addControl(new mapboxgl.GeolocateControl({
             positionOptions: {
@@ -79,7 +122,7 @@
         })
         );
 
-        //let markerLocations = [[11.255, 43.77], [11.155, 43.74]]
+        let markerLocations = [[11.255, 43.77], [11.155, 43.74]]
         let markers = []
          map.on('click', e => {
             const coordinates = e.lngLat;

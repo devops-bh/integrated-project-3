@@ -72,13 +72,6 @@
   </div>
   <!--**************************End Menu Bar****************************************-->
 
-  <div>
-
-    <input id="long" type="text">
-    <input id="lat" type="text">
-    <button id="set">set</button>
-  </div>
-
     <div id="map"></div>
     <script>
         /*
@@ -122,7 +115,7 @@
         })
         );
 
-        let markerLocations = [[11.255, 43.77], [11.155, 43.74]]
+        
         let markers = []
          map.on('click', e => {
             const coordinates = e.lngLat;

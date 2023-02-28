@@ -3,14 +3,18 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www"
+    "start": "node ./bin/www",
+    "deploy": "ngrok http 3000",
+    "deploy-help": "echo make sure you have ran: npm run start (in a different terminal session)\nMake sure you have an Ngrok authtoken in your ngrok.yml config\nYou can get an auth token after signing into the Ngrok website\nDo not distribute your authtoken publicly."
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
+    "dotenv": "^16.0.3",
     "ejs": "~2.6.1",
     "express": "~4.16.1",
     "http-errors": "~1.6.3",
-    "morgan": "~1.9.1"
+    "morgan": "~1.9.1",
+    "ngrok": "^4.3.3"
   }
 }

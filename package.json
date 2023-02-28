@@ -4,8 +4,7 @@
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
-    "deploy": "ngrok http 3000",
-    "deploy-help": "echo make sure you have ran: npm run start (in a different terminal session)\nMake sure you have an Ngrok authtoken in your ngrok.yml config\nYou can get an auth token after signing into the Ngrok website\nDo not distribute your authtoken publicly."
+    "deploy": "node deploy.js"
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",

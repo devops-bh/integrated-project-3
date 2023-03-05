@@ -14,10 +14,12 @@ router.get('/sign-in', (req, res) => {
 router.post('/sign-in', (req, res,) => {
   const { email, password } = req.body
   if (email == "" || password == "") {
-    res.render('sign-in', {message: 'email/password missing'})
-    return
+    res.redirect('https://google.com/') // todo: implement warning using the connect-flash package 
   }
-  console.log("rendered")
+  if (password == "lecturer") {
+    res.redirect('/') 
+    // todo: update session variable 
+  }
 })
 
 module.exports = router;

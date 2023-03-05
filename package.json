@@ -4,7 +4,9 @@
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
-    "deploy": "node deploy.js"
+    "node-watch": "nodemon ./bin/www",
+    "deploy": "node deploy.js",
+    "test-sign-in": "node tests/confirm-user-can-sign-in.mjs"
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",
@@ -14,6 +16,10 @@
     "express": "~4.16.1",
     "http-errors": "~1.6.3",
     "morgan": "~1.9.1",
-    "ngrok": "^4.3.3"
+    "puppeteer": "^19.7.2"
+  },
+  "devDependencies": {
+    "ngrok": "^4.3.3",
+    "nodemon": "^2.0.21"
   }
 }

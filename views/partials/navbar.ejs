@@ -13,20 +13,30 @@
                         <a class="nav-link" href="#">User</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Post&Comment</a>
+                        <a class="nav-link" href="#">Post & Comment</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Events</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Sign-in</a>
+                        <a class="nav-link" href="sign-in">Sign-in</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Sign-off</a>
+                        <a class="nav-link" href="">Sign-off</a>
                     </li>
                 </ul>
             </div>
         </div>
+                        <!-- todo: display links appropriate to the user's signed_in status -->
+                        <% if (signed_in) { %>
+                            <div style="margin-right: 20px; border-radius: 100px; background-color: green; width: 10px; height: 10px;">
+                                <!-- just a coloured dot to indicate sign in status -->
+                            </div>
+                        <% } else { %>
+                            <div style="margin-right: 20px; border-radius: 100px; background-color: red; width: 10px; height: 10px;">
+                                <!-- just a coloured dot to indicate sign in status -->
+                            </div>
+                        <% } %>
     </nav>
 </div>
 <!--**************************End Menu Bar****************************************-->

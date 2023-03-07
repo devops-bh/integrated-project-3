@@ -8,7 +8,7 @@ router.get('/', function(req, res) {
     res.render('index', { title: 'Litter Map', signed_in: true});
     return; 
   }
-  res.render('index', { title: 'Litter Map', signed_in: false });
+  res.render('index', { title: 'Litter Map', signed_in: false});
 });
 
 
@@ -19,12 +19,11 @@ router.get('/sign-in', (req, res) => {
 }) 
 
 function isSignedIn(req, res, next) {
-  console.log("checking user is signed in")
   if (req.session.signed_in == false) {
     res.redirect('/sign-in')
   } 
   if (req.session.signed_in) {
-    res.redirect('/', {title: 'Litter Map', signed_in: false})
+    res.redirect('/')
   }
   next();
 }
@@ -33,7 +32,7 @@ router.post('/sign-in', isSignedIn, (req, res) => {
   const { email, password } = req.body
   console.log(`Email: ${email}, password: ${password}`)
   if (email == "" || password == "") {
-    res.redirect('/', {signed_in: false, title: 'Litter Map'}) // todo: implement warning using the connect-flash package 
+    res.redirect('/') // todo: implement warning using the connect-flash package 
     return;
   }
   bcrypt.hash('lecturer', 1, (err, hashedPassword) => {
@@ -45,6 +44,13 @@ router.post('/sign-in', isSignedIn, (req, res) => {
         res.render('index', {title: 'signed in as ross', signed_in: req.session.signed_in}) 
     });
   });
+})
+
+router.get('/sign-off', isSignedIn, (req, res) => {
+  req.session.signed_in = false
+  req.session.destroy()
+  res.render('index', {title: 'Litter Map', signed_in: false})
+  console.log("a user signed off")
 })
 
 module.exports = router;

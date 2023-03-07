@@ -3,7 +3,7 @@ var router = express.Router();
 const bcrypt = require("bcrypt")
 
 /* GET home page. */
-router.get('/', function(req, res) {
+router.get('/', (req, res) => {
   if (req.session.signed_in == true) {
     res.render('index', { title: 'Litter Map', signed_in: true});
     return; 
@@ -22,9 +22,6 @@ function isSignedIn(req, res, next) {
   if (req.session.signed_in == false) {
     res.redirect('/sign-in')
   } 
-  if (req.session.signed_in) {
-    res.redirect('/')
-  }
   next();
 }
 
@@ -49,7 +46,7 @@ router.post('/sign-in', isSignedIn, (req, res) => {
 router.get('/sign-off', isSignedIn, (req, res) => {
   req.session.signed_in = false
   req.session.destroy()
-  res.render('index', {title: 'Litter Map', signed_in: false})
+  res.redirect('/')
   console.log("a user signed off")
 })
 

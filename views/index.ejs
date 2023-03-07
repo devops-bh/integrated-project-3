@@ -78,6 +78,11 @@
         
         let markers = []
          map.on('click', e => {
+          const signed_in = <%= signed_in %>;
+          if (!signed_in) {
+            alert("Please sign in");
+            return;
+          }
             const coordinates = e.lngLat;
             markers.push(new mapboxgl.Marker({scale: 2 /* was hoping this reduced the "accidental marker add on marker click" */})
             // how secure is setHTML? 

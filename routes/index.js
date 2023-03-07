@@ -17,22 +17,23 @@ router.get('/', function(req, res) {
 router.get('/sign-in', (req, res) => {
   res.render('sign-in', { title: 'Sign in' })
 }) 
+
 function isSignedIn(req, res, next) {
   console.log("checking user is signed in")
   if (req.session.signed_in == false) {
     res.redirect('/sign-in')
   } 
   if (req.session.signed_in) {
-    res.redirect('')
+    res.redirect('/', {title: 'Litter Map', signed_in: false})
   }
   next();
 }
 
 router.post('/sign-in', isSignedIn, (req, res) => {
   const { email, password } = req.body
-  console.log(email, password)
+  console.log(`Email: ${email}, password: ${password}`)
   if (email == "" || password == "") {
-    res.redirect('/') // todo: implement warning using the connect-flash package 
+    res.redirect('/', {signed_in: false, title: 'Litter Map'}) // todo: implement warning using the connect-flash package 
     return;
   }
   bcrypt.hash('lecturer', 1, (err, hashedPassword) => {

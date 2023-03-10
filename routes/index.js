@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 const bcrypt = require("bcrypt")
+const isSignedIn = require("./middleware").isSignedIn
 
 /* GET home page. */
 router.get('/', (req, res) => {
@@ -17,13 +18,6 @@ router.get('/', (req, res) => {
 router.get('/sign-in', (req, res) => {
   res.render('sign-in', { title: 'Sign in' })
 }) 
-
-function isSignedIn(req, res, next) {
-  if (req.session.signed_in == false) {
-    res.redirect('/sign-in')
-  } 
-  next();
-}
 
 router.post('/sign-in', isSignedIn, (req, res) => {
   const { email, password } = req.body
@@ -49,5 +43,6 @@ router.get('/sign-off', isSignedIn, (req, res) => {
   res.redirect('/')
   console.log("a user signed off")
 })
+
 
 module.exports = router;

@@ -88,7 +88,12 @@
             // how secure is setHTML? 
                 .setLngLat(coordinates).setPopup(new mapboxgl.Popup().setHTML(
                         '<h1>user content</h1>' +
-                        '<button class="trigger">Report Litter</button>' +
+                        `<div>
+                          <input type = "text" name = "lat" id = "lat" placeholder = "12.255">
+                          <input type = "text" name = "lng" id = "lng" placeholder = "44.77">
+                            <button id="add-marker">report litter</button>
+                          </div>` + // [refactor] maybe not the most readable (or secure) way (also input type="submit" > button?) 
+                         // do we want our own report litter page? 
                         '<button class="trigger">Upload Photo</button>' +
                         '<button class="trigger">Take Photo</button>' +
                         '<button class="trigger">Litter Removed</button>'
@@ -97,6 +102,27 @@
                 .addTo(map));
                 markers.map(marker => marker.togglePopup())
         });
+        document.querySelector("click", e => {
+          // don't think it matters that these are strings & not numbers for now 
+          const lat = document.querySelector("#lat").value
+          const lng = document.querySelector("#lng").value
+          const data = {lat, lng}
+          fetch("users/add-marker", {
+            method: "POST", // or 'PUT'
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data),
+          })
+            .then((response) => response.json())
+            .then((data) => {
+              console.log("Success:", data);
+              alert("Your marker has been added")
+            })
+            .catch((error) => {
+              console.error("Error:", error);
+            });
+        })
     </script>
   </body>
 </html>

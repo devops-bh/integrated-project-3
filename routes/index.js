@@ -23,7 +23,7 @@ router.post('/sign-in', isSignedIn, (req, res) => {
   const { email, password } = req.body
   console.log(`Email: ${email}, password: ${password}`)
   if (email == "" || password == "") {
-    res.redirect('/') // todo: implement warning using the connect-flash package 
+    res.redirect('/') // todo: implement warning using the connect-flash package (I think res.render should be used to get rid of the resubmit form message)
     return;
   }
   bcrypt.hash('lecturer', 1, (err, hashedPassword) => {

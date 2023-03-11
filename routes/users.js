@@ -37,70 +37,9 @@ router.get("/events", (req, res) => {
   })
 })
 
-// todo: handle connection close (on sign out?)
-/* 
-const handleSSE = (req, res) =>{
-  res.writeHead(200, {
-    'Content-Type': 'text/event-stream',
-    'Cache-Control': 'no-cache',
-    'Connection': 'keep-alive'
-  });
-  res.write('id: ' + Math.random() + '\n');
-  res.write("data: " + JSON.stringify({name: 'test'}) + '\n\n');
-  res.flush()
-}
-*/
-/* 
-let prevMarkers = []
-router.get("/events", (req, res) => {
-  res.writeHead(200, {
-    'Content-Type': 'text/event-stream',
-    'Cache-Control': 'no-cache',
-    'Connection': 'keep-alive'
-  });
-  res.write('id: ' + Math.random() + '\n');
-  res.write("data: " + JSON.stringify({name: 'test'+Math.random()}) + '\n\n');
-//  if (prevMarkers == markers) {
-    res.end()
-//  }
-  prevMarkers = markers
-  //res.flush()
-  //res.flushHeaders();
-})
-
-/*
-router.get('/events', (req, res)=>{
-    res.status(200).set({
-            'Cache-Control': 'no-cache',
-            'Content-Type': 'text/event-stream',
-            'Connection': 'keep-alive'
-    });
-    res.write(`data:${JSON.stringify(markers)} ${Math.random()}\n\n`);
-  });
-  */
-
+// [todo] handle connection close (on sign out?)
 router.get("/disconnect-map", (req, res) => {
   res.end()
 })
-/* 
-router.get('/events', (req, res) => {
 
-    res.setHeader('Cache-Control', 'no-cache');
-    res.setHeader('Content-Type', 'text/event-stream');
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Connection', 'keep-alive');
-    res.flushHeaders(); // flush the headers to establish SSE with client
-
-    res.write(`data: ${JSON.stringify({num: Math.random()})}\n\n`); 
-
-    /* 
-    // If client closes connection, stop sending events
-    res.on('close', () => {
-        console.log('client dropped me');
-        clearInterval(interValID);
-        res.end();
-    });
-    *
-});
-*/
 module.exports = router;

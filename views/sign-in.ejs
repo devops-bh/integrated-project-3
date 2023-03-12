@@ -4,13 +4,81 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- For the hamburger  -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    
     <title><%= title %></title>
 </head>
-<body>
+<!-- <style>
+body {
+    background-color: lightblue;
+} 
+
+</style> -->
+
+
+
+<!-- PD: login page CSS code -->
+<style>
+
+/* here we set the background colour */
+body {
+    background-color: lightblue;
+} 
+
+ /* PD Login page flexbox container CSS  */
+
+.loginHeading{
+    text-align: center;
+}
+
+
+.flex-container {
+  display: flex;
+  flex-direction: column;
+  background-color: DodgerBlue;
+  width: 300px;
+  margin: auto;
+  margin-top: 120px;
+  text-align: center;
+  line-height: 55px;
+  
+}
+    </style>
+    <!-- end of PD Login page flexbox container CSS -->
+
+
+
+<div class="loginHeading"><h1>Login</h1></div>
+
+
+
+ <!-- PD Login page flex container HTML -->
+    <div class="flex-container">
+
+        <div>
     <form action="/sign-in" method="POST">
+        <label id="loginUsernameLabel">Username</label>
         <input type="text" name="email" id="email" placeholder="your@email.domain">
+
+        </div>
+
+        <div>
+            <label id="loginPasswordLabel">Password</label>
         <input type="password" name="password" id="password">
-        <button id="sign-in">Sign in</button>
+    </div>
+
+    <div>
+        <button id="cancel">Cancel</button>  <button id="sign-in">Log in</button>
+    </div>
     </form>
+</div>
+
+    </div>  <!-- end of PD Login page flex container HTML-->
+
+
+
 </body>
+
 </html>

@@ -17,12 +17,16 @@ router.get('/Register', (req, res) => {
   res.render('Register', { title: 'Register' })
 }) 
 
-
+// for logged in user Main Menu page
 router.get('/loggedInUserMainmenu', (req, res) => {
   res.render('loggedInUserMainmenu', { title: 'loggedInUserMainmenu' })
 }) 
 
 
+// For report Litter Menu Homepage
+router.get('/reportLitterMenuHomepage', (req, res) => {
+  res.render('reportLitterMenuHomepage', { title: 'reportLitterMenuHomepage' })
+}) 
 
 
 // perhaps this belongs in routes/users.js 

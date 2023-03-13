@@ -12,10 +12,17 @@ router.get('/', (req, res) => {
   res.render('index', { title: 'Litter Map', signed_in: false});
 });
 
-
+// For register page
 router.get('/Register', (req, res) => {
   res.render('Register', { title: 'Register' })
 }) 
+
+
+router.get('/loggedInUserMainmenu', (req, res) => {
+  res.render('loggedInUserMainmenu', { title: 'loggedInUserMainmenu' })
+}) 
+
+
 
 
 // perhaps this belongs in routes/users.js 

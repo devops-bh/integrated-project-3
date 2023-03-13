@@ -28,6 +28,32 @@ router.get('/reportLitterMenuHomepage', (req, res) => {
   res.render('reportLitterMenuHomepage', { title: 'reportLitterMenuHomepage' })
 }) 
 
+// for pin to report page
+router.get('/pinToReportPage', (req, res) => {
+  res.render('pinToReportPage', { title: 'pinToReportPage' })
+}) 
+
+// for blog page 
+router.get('/blog', (req, res) => {
+  res.render('blog', { title: 'blog' })
+}) 
+
+// for user profile page
+router.get('/user_profile', (req, res) => {
+  res.render('user_profile', { title: 'user_profile' })
+}) 
+
+// for personal score page
+router.get('/personal_score', (req, res) => {
+  res.render('personal_score', { title: 'personal_score' })
+}) 
+
+// for monthly score page
+router.get('/monthly_score', (req, res) => {
+  res.render('monthly_score', { title: 'monthly_score' })
+}) 
+
+
 
 // perhaps this belongs in routes/users.js 
 router.get('/sign-in', (req, res) => {

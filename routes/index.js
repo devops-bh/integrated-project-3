@@ -13,6 +13,10 @@ router.get('/', (req, res) => {
 });
 
 
+router.get('/Register', (req, res) => {
+  res.render('Register', { title: 'Register' })
+}) 
+
 
 // perhaps this belongs in routes/users.js 
 router.get('/sign-in', (req, res) => {

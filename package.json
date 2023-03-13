@@ -5,6 +5,8 @@
   "scripts": {
     "start": "node ./bin/www",
     "node-watch": "nodemon ./bin/www",
+    
+
     "deploy": "node deploy.js",
     "test-sign-in": "node tests/confirm-user-can-sign-in.mjs"
   },

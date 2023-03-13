@@ -13,24 +13,24 @@ router.get('/', (req, res) => {
 });
 
 // For register page
-router.get('/Register', (req, res) => {
-  res.render('Register', { title: 'Register' })
+router.get('/register', (req, res) => {
+  res.render('register', { title: 'register' })
 }) 
 
 // for logged in user Main Menu page
-router.get('/loggedInUserMainmenu', (req, res) => {
-  res.render('loggedInUserMainmenu', { title: 'loggedInUserMainmenu' })
+router.get('/loggedinusermainmenu', (req, res) => {
+  res.render('loggedinusermainmenu', { title: 'loggedinusermainmenu' })
 }) 
 
 
 // For report Litter Menu Homepage
-router.get('/reportLitterMenuHomepage', (req, res) => {
-  res.render('reportLitterMenuHomepage', { title: 'reportLitterMenuHomepage' })
+router.get('/reportlittermenuhomepage', (req, res) => {
+  res.render('reportlittermenuhomepage', { title: 'reportlittermenuhomepage' })
 }) 
 
 // for pin to report page
-router.get('/pinToReportPage', (req, res) => {
-  res.render('pinToReportPage', { title: 'pinToReportPage' })
+router.get('/pintoreportpage', (req, res) => {
+  res.render('pintoreportpage', { title: 'pintoreportpage' })
 }) 
 
 // for blog page 
@@ -39,18 +39,18 @@ router.get('/blog', (req, res) => {
 }) 
 
 // for user profile page
-router.get('/user_profile', (req, res) => {
-  res.render('user_profile', { title: 'user_profile' })
+router.get('/userprofile', (req, res) => {
+  res.render('userprofile', { title: 'userprofile' })
 }) 
 
 // for personal score page
-router.get('/personal_score', (req, res) => {
-  res.render('personal_score', { title: 'personal_score' })
+router.get('/personalscore', (req, res) => {
+  res.render('personalscore', { title: 'personalscore' })
 }) 
 
 // for monthly score page
-router.get('/monthly_score', (req, res) => {
-  res.render('monthly_score', { title: 'monthly_score' })
+router.get('/monthlyscore', (req, res) => {
+  res.render('monthlyscore', { title: 'monthlyscore' })
 }) 
 
 

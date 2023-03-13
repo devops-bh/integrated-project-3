@@ -1,0 +1,149 @@
+[33mcommit 882b4eba282f2817edbd89c36603ff50dfa40adb[m[33m ([m[1;36mHEAD -> [m[1;32mmain[m[33m)[m
+Author: PDOCHE301 <PDOCHE301@CALEDONIAN.AC.UK>
+Date:   Sun Mar 12 22:42:23 2023 +0000
+
+    first change
+
+[33mcommit 9ee0289a2eb62960ef8c7cd2d3af13023fa9e79a[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: devops-bh <2016bryh@gmail.com>
+Date:   Fri Mar 10 02:24:50 2023 +0000
+
+    user can add & send marker to server without page reload
+
+[33mcommit 9344f62843a907a037e19dd264b397cfd4afc0be[m
+Author: devops-bh <2016bryh@gmail.com>
+Date:   Fri Mar 10 01:57:49 2023 +0000
+
+    made isSignedIn function an export
+
+[33mcommit 8c10d76d1383c3f1bf54c690949d9a023a183b00[m
+Author: devops-bh <2016bryh@gmail.com>
+Date:   Tue Mar 7 19:51:19 2023 +0000
+
+    minor changed regarding req.session.signed_in
+
+[33mcommit 0e3ca72299b08bcbbf32e1c21b6732b88dbc085a[m
+Author: devops-bh <2016bryh@gmail.com>
+Date:   Tue Mar 7 19:26:57 2023 +0000
+
+    [bug fix] user will no longer be signed off when refreshing page after signing in
+
+[33mcommit 39ba78278b41dad5551faa48d884a0588600379b[m
+Author: devops-bh <2016bryh@gmail.com>
+Date:   Tue Mar 7 16:05:34 2023 +0000
+
+    implemented request that the user signs in to pin the map
+
+[33mcommit 9e1f4175ff77633d806bb44597eea0a04f02afac[m
+Author: devops-bh <2016bryh@gmail.com>
+Date:   Mon Mar 6 13:03:52 2023 +0000
+
+    implemented password hashing regarding signing in (for hardcoded user) and a coloured circle to visually indiciate the user's signed in status
+
+[33mcommit 5364c2cebdf4e7ca130c15de44302cee7c02dead[m
+Author: devops-bh <2016bryh@gmail.com>
+Date:   Sun Mar 5 18:27:11 2023 +0000
+
+    implemented signing in (for hardcoded user) without a hashed password
+
+[33mcommit f2ddd9a018e7ff0f798b010339a928739ea3e638[m
+Author: devops-bh <2016bryh@gmail.com>
+Date:   Sun Mar 5 17:36:02 2023 +0000
+
+    simple form example with basic validation
+
+[33mcommit ea9526e6cc18d2d3886430bf142b561e6614817c[m
+Author: devops-bh <2016bryh@gmail.com>
+Date:   Sun Mar 5 17:11:43 2023 +0000
+
+    added sign-in.ejs added puppeteer script to automate signing in
+
+[33mcommit db054d965f27f7e71ac7a263ada37d3f01c04f51[m
+Author: devops-bh <2016bryh@gmail.com>
+Date:   Sun Mar 5 15:40:38 2023 +0000
+
+    fix index.ejs's title
+
+[33mcommit 1513234b76bc04f93de59d74ac1fa8392a34181a[m
+Author: devops-bh <2016bryh@gmail.com>
+Date:   Tue Feb 28 15:07:08 2023 +0000
+
+    add example env file
+
+[33mcommit c988ed84be9ec32432441577451d72d7b8a7b958[m
+Author: devops-bh <2016bryh@gmail.com>
+Date:   Tue Feb 28 15:05:47 2023 +0000
+
+    add [ngrok] deploy command to package.json
+
+[33mcommit 8ec5a7e3ee972d566630b8bce425a23bb496394e[m
+Author: devops-bh <2016bryh@gmail.com>
+Date:   Tue Feb 28 15:03:11 2023 +0000
+
+    use ngrok npm package to expose localhost:3000
+
+[33mcommit 3a654c5532f817e2e877549e956922c06688c3e8[m
+Author: devops-bh <2016bryh@gmail.com>
+Date:   Tue Feb 28 14:33:14 2023 +0000
+
+    made navbar an EJS partial
+
+[33mcommit 932c13dfced772a145bfaf281804140f5c817a52[m
+Merge: c0afadf f4ca383
+Author: b <43749613+devops-bh@users.noreply.github.com>
+Date:   Mon Feb 27 10:48:39 2023 +0000
+
+    Merge pull request #2 from Jeko86/main
+    
+    GF - switch menu bar from JS to Bootstrap5
+
+[33mcommit f4ca38396213eb1eb502604a8fbc9dc9045a336f[m
+Author: Jeko86 <giacomofaddait@gmail.com>
+Date:   Mon Feb 27 08:23:15 2023 +0000
+
+    GF - switch menu bar from JS to Bootstrap5
+
+[33mcommit c0afadfc855799a5998eff59d1b97d44668f76ee[m
+Merge: f0b3b1a 4daa8a9
+Author: b <43749613+devops-bh@users.noreply.github.com>
+Date:   Sun Feb 26 21:23:45 2023 +0000
+
+    Merge pull request #1 from Jeko86/main
+    
+    Index File Changes including UI changes using W3Schools' CSS library & added a map control
+
+[33mcommit 4daa8a9a1a8fb65b32ecec7a0b390cc4ac99f2e4[m
+Author: Jeko86 <giacomofaddait@gmail.com>
+Date:   Sun Feb 26 20:40:40 2023 +0000
+
+    GF_Index_Modification_2
+
+[33mcommit 06dab619619878055f5545227c613f09583f5545[m
+Author: Jeko86 <giacomofaddait@gmail.com>
+Date:   Sun Feb 26 20:38:04 2023 +0000
+
+    GF_Index_modification_1
+
+[33mcommit a1a717e5401315c4af85dfda45f552bdbabe27bc[m
+Author: Jeko86 <giacomofaddait@gmail.com>
+Date:   Sun Feb 26 20:31:39 2023 +0000
+
+    GF_Test2
+
+[33mcommit 7b588508583f95f9f325516c574b9be1242db7f9[m
+Author: Jeko86 <giacomofaddait@gmail.com>
+Date:   Sun Feb 26 20:07:23 2023 +0000
+
+    GF_Test1
+
+[33mcommit f0b3b1a663a17c26fba03ce9c4825af196ce6465[m
+Author: devops-bh <2016bryh@gmail.com>
+Date:   Fri Feb 24 21:24:50 2023 +0000
+
+    example of add markers on click
+
+[33mcommit ad18818be7bb20701691a09ef35c5b24f3c2948a[m
+Author: devops-bh <2016bryh@gmail.com>
+Date:   Fri Feb 24 20:15:13 2023 +0000
+
+    project generated using expressjs

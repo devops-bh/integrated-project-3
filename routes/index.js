@@ -29,13 +29,13 @@ router.get('/reportlittermenuhomepage', (req, res) => {
 }) 
 
 // for pin to report page
-router.get('/pintoreportpage', (req, res) => {
-  res.render('pintoreportpage', { title: 'pintoreportpage' })
+router.get('/pinToReportPage', (req, res) => {
+  res.render('pinToReportPage', { title: 'pinToReportPage' })
 }) 
 
 // for blog page 
-router.get('/blog', (req, res) => {
-  res.render('blog', { title: 'blog' })
+router.get('/Blog', (req, res) => {
+  res.render('Blog', { title: 'Blog' })
 }) 
 
 // for user profile page

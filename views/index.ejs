@@ -88,16 +88,34 @@
             markers.push(new mapboxgl.Marker({scale: 2 /* was hoping this reduced the "accidental marker add on marker click" */})
             // how secure is setHTML? 
                 .setLngLat(coordinates).setPopup(new mapboxgl.Popup().setHTML(
-                        '<h1>user content</h1>' +
-                        `<div>
+                        '<h3 style="text-align:center;">user content</h1>' +
+                        `<div class="text-center">
                           <input type = "text" name = "lat" id = "lat" placeholder = "12.255">
                           <input type = "text" name = "lng" id = "lng" placeholder = "44.77">
-                            <button id="add-marker">report litter</button>
+                                                
                           </div>` + // [refactor] maybe not the most readable (or secure) way (also input type="submit" > button?) 
                          // do we want our own report litter page? 
-                        '<button class="trigger">Upload Photo</button>' +
-                        '<button class="trigger">Take Photo</button>' +
-                        '<button class="trigger">Litter Removed</button>'
+                         '<br>'+
+
+                        '<div class="text-center">'+
+                        '<button id="add-marker" class="btn btn-success btn-sm">report litter</button>'   +
+                        '</div>' +
+                        '<br>'+
+
+                        '<div class="text-center">'+
+                        '<button class="btn btn-info btn-sm">Upload Photo</button>' +
+                        '</div>' +
+                        '<br>'+
+
+                        '<div class="text-center">'+
+                        '<button class="btn btn-info btn-sm">Take Photo</button>' +
+                        '</div>'+
+                        '<br>'+
+
+                        '<div class="text-center">'+
+                        '<button class="btn btn-danger btn-sm">Litter Removed</button>' +
+                        '</div>'
+                        
                     )
                 )
                 .addTo(map));

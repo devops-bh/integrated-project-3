@@ -17,12 +17,6 @@ router.get('/register', (req, res) => {
   res.render('register', { title: 'register' })
 }) 
 
-// for logged in user Main Menu page
-router.get('/loggedinusermainmenu', (req, res) => {
-  res.render('loggedinusermainmenu', { title: 'loggedinusermainmenu' })
-}) 
-
-
 // For report Litter Menu Homepage
 router.get('/reportlittermenuhomepage', (req, res) => {
   res.render('reportlittermenuhomepage', { title: 'reportlittermenuhomepage' })
@@ -43,15 +37,7 @@ router.get('/userprofile', (req, res) => {
   res.render('userprofile', { title: 'userprofile' })
 }) 
 
-// for personal score page
-router.get('/personalscore', (req, res) => {
-  res.render('personalscore', { title: 'personalscore' })
-}) 
 
-// for monthly score page
-router.get('/monthlyscore', (req, res) => {
-  res.render('monthlyscore', { title: 'monthlyscore' })
-}) 
 
 
 

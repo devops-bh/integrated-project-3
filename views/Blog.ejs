@@ -4,20 +4,36 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script> 
     <!-- For the hamburger  -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    
-    <title><%= title %></title>
-    <body>
-        <p>Blog</p>
-    </body>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">   
+    <title><%= title %></title>    
 </head>
 
+<body>
 
+    <div class="container mt-3">
+        <h2>Write Post</h2>
+        <form action="/action_page.php">
+          <div class="mb-3 mt-3">
+            <label for="comment">Post:</label>
+            <textarea class="form-control" rows="5" id="post" name="text"></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+      </div>  
 
-
-
+    <div class="container mt-3">
+        <h2>leave a comment</h2>
+        <form action="/action_page.php">
+          <div class="mb-3 mt-3">
+            <label for="comment">Comments:</label>
+            <textarea class="form-control" rows="5" id="comment" name="text"></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+      </div>    
 </body>
 
 </html>

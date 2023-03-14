@@ -9,6 +9,22 @@
             </button>
             <div class="collapse navbar-collapse" id="collapsibleNavbar">
                 <ul class="navbar-nav">
+                    
+                    
+                    <% if (!signed_in) { %> 
+                    <li class="nav-item">
+                        <a class="nav-link" href="/sign-in">Sign-in</a>
+                    </li>
+
+                    <!-- Register link -->
+                    <li class="nav-item">
+                        <a class="nav-link" href="/register">Register</a>
+                    </li>
+                    <% } else { %>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/sign-off">Sign-off</a>
+                    </li>
+
                     <li class="nav-item">
                         <a class="nav-link" href="#">User</a>
                     </li>
@@ -20,10 +36,7 @@
                         <a class="nav-link" href="#">Events</a>
                     </li>
 
-                    <!-- Register link -->
-                    <li class="nav-item">
-                        <a class="nav-link" href="/register">Register</a>
-                    </li>
+                    
 
                     <!-- Logged in user main menu link -->
                     <li class="nav-item">
@@ -60,15 +73,6 @@
                     <!-- Monthly score page link -->
                     <li class="nav-item">
                         <a class="nav-link" href="/monthlyscore">MScore</a>
-                    </li>
-                    
-                    <% if (!signed_in) { %> 
-                    <li class="nav-item">
-                        <a class="nav-link" href="/sign-in">Sign-in</a>
-                    </li>
-                    <% } else { %>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/sign-off">Sign-off</a>
                     </li>
                     <% } %>
                 </ul>

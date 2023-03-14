@@ -28,11 +28,14 @@
             height: 100%;
           }
 
+
       </style>
 
 </head>
 <body>
   <%- include('./partials/navbar.ejs', {signed_in: signed_in}) %>
+  
+  
     <div id="map"></div>
     <script>
         /*
@@ -97,24 +100,14 @@
                          // do we want our own report litter page? 
                          '<br>'+
 
-                        '<div class="text-center">'+
-                        '<button id="add-marker" class="btn btn-success btn-sm">report litter</button>'   +
-                        '</div>' +
-                        '<br>'+
+                         '<table style="width:100%">'+
+                         '<tr>'+   
+                         '<td><button id="add-marker" class="btn btn-success btn-sm">Litter</button></td>'+                        
+                         '<td><button class="btn btn-info btn-sm">Photo</button></td>'+
+                         '<td><button class="btn btn-danger btn-sm">Removed</button></td>'+
+                         '</tr>'+
+                         '</table>'
 
-                        '<div class="text-center">'+
-                        '<button class="btn btn-info btn-sm">Upload Photo</button>' +
-                        '</div>' +
-                        '<br>'+
-
-                        '<div class="text-center">'+
-                        '<button class="btn btn-info btn-sm">Take Photo</button>' +
-                        '</div>'+
-                        '<br>'+
-
-                        '<div class="text-center">'+
-                        '<button class="btn btn-danger btn-sm">Litter Removed</button>' +
-                        '</div>'
                         
                     )
                 )

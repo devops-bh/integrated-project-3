@@ -27,6 +27,20 @@
             width: 100%;
             height: 100%;
           }
+          #marker {
+              display: block;
+              position: relative;
+              margin: 0px auto;
+              width: 50%;
+              height: 40px;
+              padding: 10px;
+              border: none;
+              border-radius: 3px;
+              font-size: 12px;
+              text-align: center;
+              color: #fff;
+              background: #0ba310; 
+              }
 
 
       </style>
@@ -37,7 +51,9 @@
   
   
     <div id="map"></div>
+    <button id="marker">Add New Marker</button>
     <script>
+      
         mapboxgl.accessToken = 'pk.eyJ1IjoiYmgzMDAiLCJhIjoiY2xlaWpsZW91MDI0dDQxbnI4aWNueTVneiJ9.u0cO3o-dzacQpUpt2rxLtA';
 
         // [refactor] this was the quickest/easiest way to implement getting the marker's details and sending them to the server, there may be alternative (better) approaches  
@@ -47,7 +63,7 @@
             container: 'map', // container ID
             // Choose from Mapbox's core styles, or make your own style with Mapbox Studio
             style: 'mapbox://styles/mapbox/outdoors-v12', // style URL
-            center: [11.255, 43.77], // starting position
+            center: [-4.25424,55.86279], // starting position
             zoom: 13 // starting zoom
 
         });
@@ -84,7 +100,7 @@
             // [todo] set the popup here to allow a user to edit their marked litter event? 
             _marker.addTo(map)
           };
-                
+          //click on the map, then click on the "Add new Marker" to add new marker       
           map.on('click', e => {
           // [refactor] (quick fix) I think we should be using layers (a special MapboxGL concept)  
           if (e.originalEvent.target.parentNode.parentNode.classList.contains("mapboxgl-marker")) {
@@ -95,11 +111,12 @@
             alert("Please sign in");
             return;
           }
+          document.getElementById('marker').addEventListener('click', () => {
             const coordinates = e.lngLat;
               // [refactor] there's likely a better way to organize this but this will do for now 
-            let _marker = new mapboxgl.Marker({ scale: 2 }).setLngLat(coordinates)
+            let _marker = new mapboxgl.Marker({ scale: 2}).setLngLat(coordinates)
             state.newMarkerToAdd = { lng: coordinates.lng, lat: coordinates.lat }
-            markers.push(new mapboxgl.Marker({scale: 2 /* was hoping this reduced the "accidental marker add on marker click" */})
+            markers.push(new mapboxgl.Marker({scale: 2, draggable: true /* was hoping this reduced the "accidental marker add on marker click" */})
             // how secure is setHTML? 
                 .setLngLat(coordinates).setPopup(new mapboxgl.Popup().setHTML(
                         '<h3 style="text-align:center;">user content</h1>' +
@@ -121,7 +138,7 @@
                     )
                 )
                 .addTo(map));
-                //markers.map(marker => marker.togglePopup())
+        });
         });
         
         function addMarker() { // [refactor] there may be a proper way of attaching event listeners to the popup but this was the quickest/easiest way 
@@ -144,6 +161,7 @@
                 console.error("Error:", error);
               });
           }
+
 
     </script>
   </body>

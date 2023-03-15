@@ -5,8 +5,6 @@
   "scripts": {
     "start": "node ./bin/www",
     "node-watch": "nodemon ./bin/www",
-    
-
     "deploy": "node deploy.js",
     "test-sign-in": "node tests/confirm-user-can-sign-in.mjs"
   },
@@ -20,6 +18,7 @@
     "express-session": "^1.17.3",
     "http-errors": "~1.6.3",
     "morgan": "~1.9.1",
+    "mysql2": "^3.2.0",
     "puppeteer": "^19.7.2"
   },
   "devDependencies": {

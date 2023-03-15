@@ -14,7 +14,7 @@ router.get('/', (req, res) => {
 
 // For register page
 router.get('/register', (req, res) => {
-  res.render('register', { title: 'register' })
+  res.render('register', { title: 'register', signed_in: false })
 }) 
 
 // For report Litter Menu Homepage

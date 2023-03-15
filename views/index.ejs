@@ -38,24 +38,7 @@
   
     <div id="map"></div>
     <script>
-        /*
-        TODO: 
-            - render a map - done 
-            - add a marker to the map - done 
-            - dynamically add markers to the map - postponed (can't do this since we don't have any server logic)
-                - [instead] loop through a JS object which contains where the markers will go 
-                - add the marker to the map 
-            - allow the user to add a marker to the map on click of the button 
-                - Giacomo: at the moment the user will manually type their coordinates, later we'll get the coordinates via where the user clicked the map - done
-                - Patrick: add an html input field - done
-                - Patrick: add a html button - done
-                - when the user clicks button 
-                - get the content of the input field 
-                - update the markers array in the above JS object - in progress
-        */
-
         mapboxgl.accessToken = 'pk.eyJ1IjoiYmgzMDAiLCJhIjoiY2xlaWpsZW91MDI0dDQxbnI4aWNueTVneiJ9.u0cO3o-dzacQpUpt2rxLtA';
-        // - render a map - done
 
         // [refactor] this was the quickest/easiest way to implement getting the marker's details and sending them to the server, there may be alternative (better) approaches  
           let state = { newMarkerToAdd: null }

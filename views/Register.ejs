@@ -10,9 +10,58 @@
     <!-- For the hamburger  -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <style>
+    
+
+    
+    </style>
+
     <title><%= title %></title>
+
+
+
   </head>
     <body>
+
+
+   
+
+
+
+
+<!-- <div class="container mt-3">
+  <h2>Circle</h2>
+  <p>The .rounded-circle class shapes the image to a circle:</p>            
+  <img src="images\boy_emoji_avatar.jpg" class="rounded-circle" alt="avatar_emoji" width="304" height="236"> 
+</div> -->
+
+<style>
+  .reg_heading1{
+
+text-align: center;
+  }
+</style>
+
+
+
+
+<div class="reg_heading1">
+<h1>Register page</h1>
+</div>
+
+<!-- Upload profile picture from PC: need backend for this process-->
+<h2>Upload Profile Picture</h2>
+<form action="/action_page.php">
+  <input type="file" id="myFile" name="filename">
+  <input type="submit">
+</form>
+
+
+
+
+
         <div class="container mt-3">           
             <div class="container mt-3">
                 <h3>New account info</h3>
@@ -22,7 +71,7 @@
                   
 
                   <div class="mb-3 mt-3">
-                    <label for="firstname" class="form-label">Firstnames:</label>
+                    <label for="firstname" class="form-label">Firstname:</label>
                     <input type="text" class="form-control" id="firstname" placeholder="Enter firstname" name="firstname" required>
                     <div class="valid-feedback">Valid.</div>
                     <div class="invalid-feedback">Please fill out this field.</div>

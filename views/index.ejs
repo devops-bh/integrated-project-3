@@ -57,6 +57,9 @@
         mapboxgl.accessToken = 'pk.eyJ1IjoiYmgzMDAiLCJhIjoiY2xlaWpsZW91MDI0dDQxbnI4aWNueTVneiJ9.u0cO3o-dzacQpUpt2rxLtA';
         // - render a map - done
 
+        // [refactor] this was the quickest/easiest way to implement getting the marker's details and sending them to the server, there may be alternative (better) approaches  
+          let state = { newMarkerToAdd: null }
+
         const map = new mapboxgl.Map({
             container: 'map', // container ID
             // Choose from Mapbox's core styles, or make your own style with Mapbox Studio
@@ -79,30 +82,49 @@
         })
         );
 
-        
-        let markers = []
-         map.on('click', e => {
+          // [refactor/feature] maybe introduce a "your markers" list 
+          let othersMarkers = []
+          let markers = []
+
+          // [todo] fetch the markers which were added whilst the user was not looking at the map (e.g. on another page) 
+
+          // [todo] I don't think this will get pre-existing markers so this will be for markers added when the user is looking at the map 
+          let eventSource = new EventSource("/users/events/");
+          const userId = Math.random() * 10 // [refactor] will likely be generated via server side as a UUID  
+
+          eventSource.onmessage = event => { // [todo] distinguish the users' already added markers from other users' markers 
+            const parsedData = JSON.parse(event.data)
+            const { lat, lng } = parsedData.marker
+            let lngLat = { lng: lng, lat: lat }
+            console.log("New marker added: ", lngLat)
+            let _marker = new mapboxgl.Marker({ scale: 2, color: "orange" }).setLngLat(lngLat)
+            // [todo] set the popup here to allow a user to edit their marked litter event? 
+            _marker.addTo(map)
+          };
+                
+          map.on('click', e => {
           const signed_in = <%= signed_in %>;
           if (!signed_in) {
             alert("Please sign in");
             return;
           }
             const coordinates = e.lngLat;
+              // [refactor] there's likely a better way to organize this but this will do for now 
+            let _marker = new mapboxgl.Marker({ scale: 2 }).setLngLat(coordinates)
+            state.newMarkerToAdd = { lng: coordinates.lng, lat: coordinates.lat }
             markers.push(new mapboxgl.Marker({scale: 2 /* was hoping this reduced the "accidental marker add on marker click" */})
             // how secure is setHTML? 
                 .setLngLat(coordinates).setPopup(new mapboxgl.Popup().setHTML(
                         '<h3 style="text-align:center;">user content</h1>' +
                         `<div class="text-center">
-                          <input type = "text" name = "lat" id = "lat" placeholder = "12.255">
-                          <input type = "text" name = "lng" id = "lng" placeholder = "44.77">
-                                                
+                          <input type="text" name="name" placeholder="name">
                          </div>` + // [refactor] maybe not the most readable (or secure) way (also input type="submit" > button?) 
                          // do we want our own report litter page? 
                          '<br>'+
 
                          '<table style="width:100%">'+
                          '<tr>'+   
-                         '<td><button id="add-marker" class="btn btn-success btn-sm">Litter</button></td>'+                        
+                         '<td><button id="add-marker" onClick="addMarker()" class="btn btn-success btn-sm">Litter</button></td>'+                        
                          '<td><button class="btn btn-info btn-sm">Photo</button></td>'+
                          '<td><button class="btn btn-danger btn-sm">Removed</button></td>'+
                          '</tr>'+
@@ -114,27 +136,28 @@
                 .addTo(map));
                 markers.map(marker => marker.togglePopup())
         });
-        document.querySelector("click", e => {
-          // don't think it matters that these are strings & not numbers for now 
-          const lat = document.querySelector("#lat").value
-          const lng = document.querySelector("#lng").value
-          const data = {lat, lng}
-          fetch("users/add-marker", {
-            method: "POST", // or 'PUT'
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(data),
-          })
-            .then((response) => response.json())
-            .then((data) => {
-              console.log("Success:", data);
-              alert("Your marker has been added")
+        
+        function addMarker() { // [refactor] there may be a proper way of attaching event listeners to the popup but this was the quickest/easiest way 
+            // [todo] use a similar (or better) approach to get the event details e.g. name of event 
+            const { lat, lng } = state.newMarkerToAdd
+            const data = { userId, lat, lng }
+            fetch("users/add-marker", {
+              method: "POST", // or 'PUT'
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(data),
             })
-            .catch((error) => {
-              console.error("Error:", error);
-            });
-        })
+              .then((response) => response.json())
+              .then((data) => {
+                console.log("Success:", data);
+                alert("Your marker has been added")
+              })
+              .catch((error) => {
+                console.error("Error:", error);
+              });
+          }
+
     </script>
   </body>
 </html>

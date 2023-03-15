@@ -103,6 +103,10 @@
           };
                 
           map.on('click', e => {
+          // [refactor] (quick fix) I think we should be using layers (a special MapboxGL concept)  
+          if (e.originalEvent.target.parentNode.parentNode.classList.contains("mapboxgl-marker")) {
+            return; 
+          } 
           const signed_in = <%= signed_in %>;
           if (!signed_in) {
             alert("Please sign in");
@@ -134,7 +138,7 @@
                     )
                 )
                 .addTo(map));
-                markers.map(marker => marker.togglePopup())
+                //markers.map(marker => marker.togglePopup())
         });
         
         function addMarker() { // [refactor] there may be a proper way of attaching event listeners to the popup but this was the quickest/easiest way 

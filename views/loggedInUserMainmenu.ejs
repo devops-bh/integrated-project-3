@@ -10,14 +10,100 @@
     
     <title><%= title %></title>
     <body>
-        <p>Logged in user main menu page</p>
+        
+
+    </head>
+
     </body>
-</head>
 
 
 
+<style>
+/* here we set the background colour */
+            body {
+                background-color: lightblue;
+            } 
+            
+             
+            
+            .Heading{
+                text-align: center;
+            }
+
+/* The Hanburger Menu for the different links*/
+                        
+            .topnav {
+            overflow: hidden;
+            background-color: #333;
+            position: relative;
+            }
+
+            .topnav #myLinks {
+            display: none;
+            }
+
+            .topnav a {
+            color: rgb(25, 155, 147);
+            padding: 14px 16px;
+            text-decoration: none;
+            font-size: 17px;
+            display: block;
+            }
+
+            .topnav a.icon {
+            background: black;
+            display: block;
+            position: absolute;
+            right: 0;
+            top: 0;
+            }
+
+            .topnav a:hover {
+            background-color: #ddd;
+            color: black;
+            }
+
+            .active {
+            background-color: #9ffdda;
+            color: white;
+            }
+
+</style>
+
+
+<!-- HTML Code for the hanburger menu and links to the other pages -->
+<div class="Heading"><h1>Welcome!</h1></div>
+
+
+<div class="topnav">
+    <a href="/loggedInUserMainmenu" class="active">Homepage</a>
+    <div id="myLinks">
+      <a href="/reportLitterMenuHomepage">Report Litter</a>
+      <a href="/Blog">Blog</a>
+      <a href="/userprofile">view your profile</a>
+      <a href="/personalscore">View your personal score</a>
+      <a href="/monthlyscore">View monthly participants scores</a>
+    </div>
+    
+    <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+      <i class="fa fa-bars"></i>
+    </a>
+  </div>
+
+
+
+<!-- Script that can be used and expanded if one wishes for the hamburger menu -->
+  <script>
+    function myFunction() {
+      var x = document.getElementById("myLinks");
+      if (x.style.display === "block") {
+        x.style.display = "none";
+      } else {
+        x.style.display = "block";
+      }
+    }
+    </script>
+    
 
 
 </body>
-
-</html>

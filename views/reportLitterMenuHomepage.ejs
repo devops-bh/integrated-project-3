@@ -6,204 +6,52 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script> 
+    <style>
 
-    <!-- For the hamburger  -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    
+    </style>
+
     <title><%= title %></title>
+    
+  </head>
+  <body>
+    <%- include('./partials/navbar.ejs', {signed_in: signed_in}) %>
+       <div class="container mt-3">           
+           <div class="container mt-3">
+               <h2 class="text-center">Create new Report</h3>
+              
+               <form action="/action_page.php" class="was-validated">
+
+                 
+
+                 <div class="mb-3 mt-3">
+                   <label for="firstname" class="form-label">Title:</label>
+                   <input type="text" class="form-control" id="title" placeholder="Enter Title" name="title" required>
+                 </div>
 
 
-    </head>
-    <body>
-      <%- include('./partials/navbar.ejs', {signed_in: signed_in}) %>
-
-        <style>
-            /* here we set the background colour */
-                        body {
-                            background-color: lightblue;
-                        } 
-                        
-                         /* PD Register page flexbox container CSS  */
-                        
-                        .Heading{
-                            text-align: center;
-                        }
-            
-            /* The Hanburger Menu */
-                                    
-                        .topnav {
-                        overflow: hidden;
-                        background-color: #333;
-                        position: relative;
-                       
-                        }
-            
-                        .topnav #myLinks {
-                        display: none;
-                        }
-            
-                        .topnav a {
-                        color: rgb(25, 155, 147);
-                        padding: 14px 16px;
-                        text-decoration: none;
-                        font-size: 17px;
-                        display: block;
-                        }
-            
-                        .topnav a.icon {
-                        background: black;
-                        display: block;
-                        position: absolute;
-                        right: 0;
-                        top: 0;
-                        }
-            
-                        .topnav a:hover {
-                        background-color: #ddd;
-                        color: black;
-                        }
-            
-                        .active {
-                        background-color: #9ffdda;
-                        color: white;
-                        }
+                 <div class="mb-3 mt-3">
+                  <label for="firstname" class="form-label">Comment:</label>
+                  <input type="text" class="form-control" id="comment" placeholder="Enter Comment" name="comment" required>
+                </div>
 
 
+                 <div class="mb-3 mt-3">
+                  <!-- Upload profile picture from PC: need backend for this process-->
+                  <div class="mb-3">
+                    <label for="uploadImage" class="form-label">Add image:</label>
+                    <label for="formFileSm" class="form-label"></label>
+                    <input class="form-control" id="formFileMd" type="file">                                               
+                </div>
 
-                        /* CSS for the report litter hamburger menu */
-
-                       
-                body {
-                    background-color: lightblue;
-                } 
-                
-                 /* PD Register page flexbox container CSS  */
-                
-                .Heading2{
-                    text-align: center;
-                }
-    
-    /* The Hanburger Menu */
-                            
-                .topnav2 {
-                overflow: hidden;
-                background-color: #333;
-                position: relative;
-                }
-    
-                .topnav2 #myLinks2 {
-                display: none;
-                }
-    
-                .topnav2 a {
-                color: rgb(25, 155, 147);
-                padding: 14px 16px;
-                text-decoration: none;
-                font-size: 17px;
-                display: block;
-                }
-    
-                .topnav2 a.icon2 {
-                background: black;
-                display: block;
-                position: absolute;
-                right: 0;
-                top: 0;
-                }
-    
-                .topnav2 a:hover {
-                background-color: #ddd;
-                color: black;
-                }
-    
-                .active2 {
-                background-color: #9ffdda;
-                color: white;
-                }
-            
-            </style>
-        
-
-    
-    <!-- HTML Code for the hanburger menu and links to the other pages -->
-    <div class="Heading"><h1>"Report litter section</h1></div>
-    
-    
-    <div class="topnav">
-        <a href="/loggedInUserMainmenu" class="active">View other pages: click on hanburger</a>
-        <div id="myLinks">
-          <a href="/reportLitterMenuHomepage">Report Litter</a>
-          <a href="/Blog">Blog</a>
-          <a href="/userprofile">view your profile</a>
-          <a href="/personalscore">View your personal score</a>
-          <a href="/monthlyscore">View monthly participants scores</a>
-        </div>
-        
-        <a href="javascript:void(0);" class="icon" onclick="myFunction()">
-          <i class="fa fa-bars"></i>
-        </a>
-      </div>
-    
-    
-    
-    <!-- Script that can be used and expanded if one wishes for the hamburger menu -->
-      <script>
-        function myFunction() {
-          var x = document.getElementById("myLinks");
-          if (x.style.display === "block") {
-            x.style.display = "none";
-          } else {
-            x.style.display = "block";
-          }
-        }
-        </script>
-        
                 
 
-<!-- HTML Code for hamburger menu for reporting litter -->
-
-    <!-- HTML Code for the hanburger menu and links to the other pages -->
-    <div class="Heading2"><h1>Report Litter</h1></div>
-            
-            
-    <div class="topnav2">
-        <a href="/loggedInUserMainmenu" class="active2">click hamburger on right for reporting litter</a>
-        <div id="myLinks2">
-          <a href="/#">click here to report litter</a>
-          <a href="/#">Take photo</a>
-          <a href="/#">Upload photo</a>
-          <a href="/#">Litter removed</a>
-          
-        </div>
-        
-        <a href="javascript:void(0);" class="icon2" onclick="myFunction2()">
-          <i class="fa fa-bars"></i>
-        </a>
-      </div>
-    
-    
-    
-    <!-- Script that can be used and expanded if one wishes for the hamburger menu -->
-      <script>
-        function myFunction2() {
-          var x = document.getElementById("myLinks2");
-          if (x.style.display === "block") {
-            x.style.display = "none";
-          } else {
-            x.style.display = "block";
-          }
-        }
-        </script>
-
-
-        
-    </body>
-
-
-
-
-
-
-</body>
+                 <div class="text-center">
+                   <button type="cancel" class="btn btn-danger" onclick="history.back()">Cancel</button>
+                   <button type="submit" class="btn btn-success" >Submit</button>
+                 </div>
+                                
+               </form>
+             </div>
+   </body>
 
 </html>

@@ -38,12 +38,9 @@ router.get('/userprofile', (req, res) => {
 }) 
 
 
-
-
-
 // perhaps this belongs in routes/users.js 
 router.get('/sign-in', (req, res) => {
-  res.render('sign-in', { title: 'Sign in' })
+  res.render('sign-in', { title: 'Sign in', signed_in: false })
 }) 
 
 router.post('/sign-in', isSignedIn, (req, res) => {

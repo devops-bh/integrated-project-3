@@ -29,7 +29,7 @@ router.get('/pinToReportPage', (req, res) => {
 
 // for blog page 
 router.get('/Blog', (req, res) => {
-  res.render('Blog', { title: 'Blog', signed_in: false })
+  res.render('Blog', { title: 'Blog', signed_in: true })
 }) 
 
 // for user profile page

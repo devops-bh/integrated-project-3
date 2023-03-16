@@ -23,8 +23,8 @@ router.get('/reportlittermenuhomepage', (req, res) => {
 }) 
 
 // for pin to report page
-router.get('/pinToReportPage', (req, res) => {
-  res.render('pinToReportPage', { title: 'pinToReportPage', signed_in: true })
+router.get('/reportList', (req, res) => {
+  res.render('reportList', { title: 'reportList', signed_in: true })
 }) 
 
 // for blog page 

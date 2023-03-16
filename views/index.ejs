@@ -101,7 +101,7 @@
             _marker.addTo(map)
           };
           //click on the map, then click on the "Add new Marker" to add new marker       
-          map.on('click', e => {
+          map.once('click', e => {
           // [refactor] (quick fix) I think we should be using layers (a special MapboxGL concept)  
           if (e.originalEvent.target.parentNode.parentNode.classList.contains("mapboxgl-marker")) {
             return; 
@@ -167,6 +167,7 @@
             // 1, User clicks on the map and a marker appears
             // 2. user clicks on the button report litter (this green one), this sends him to another page
             // 3. user fills ale and done
+           
             const { lat, lng } = state.newMarkerToAdd
             const data = { userId, lat, lng }
             fetch("users/add-marker", {
@@ -184,7 +185,7 @@
               .catch((error) => {
                 console.error("Error:", error);
               });
-
+            
              
 
 

@@ -12,6 +12,8 @@
       <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
       <link href="public\stylesheets\PD.css">
       <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+      <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
       <style>
 
         body {
@@ -30,20 +32,38 @@
           #markerReport {
               display: block;
               bottom: 5%;
-              left: 15%;
-              right: 10%;
+              left: 30%;
+              right: 0%;
               position:absolute;
               margin: 0px auto;
-              width: 50%;
+              width: 30%;
               height: 40px;
               padding: 10px;
               border: none;
               border-radius: 3px;
-              font-size: 12px;
+              font-size: 15px;
               text-align: center;
               color: #fff;
               background: #0ba310; 
+            
               
+              }
+              #trashButton {
+              display: block;
+              bottom: 5%;
+              left: 80%;
+              right: 0%;
+              position:absolute;
+              margin: 0px auto;
+              width: 10%;
+              height: 40px;
+              border: none;
+              border-radius: 3px;
+              font-size: 25px;
+              text-align: center;
+              color: #ececec;
+              background: #0ba310; 
+             
               }
 
 
@@ -53,10 +73,17 @@
 <body>
   <%- include('./partials/navbar.ejs', {signed_in: signed_in}) %>
   
-  
+
     <div id="map"></div>
+    <div class="w3-show-inline-block">
+      <div class="w3-bar">
      <a href="/reportlittermenuhomepage" id="markerReport" class="btn btn-info" role="button">Report Place</a>
- 
+     <!--marker.remove(); can be use, but I am not sure if user can click again and add another marker (because 'map.once'). The trash icon will be added to the icon instead of the text -->
+     <a href="" id="trashButton" class="" role="button">
+      <i class="fa fa-trash-o"></i>
+     </a>
+    </div>
+  </div>
     <script>
       
         mapboxgl.accessToken = 'pk.eyJ1IjoiYmgzMDAiLCJhIjoiY2xlaWpsZW91MDI0dDQxbnI4aWNueTVneiJ9.u0cO3o-dzacQpUpt2rxLtA';

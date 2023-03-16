@@ -1,5 +1,4 @@
 <div>
-    <!--************************** boostrap5 menu bar****************************************-->
     <!-- Sidebar/menu -->
     <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
         <div class="container-fluid">
@@ -11,11 +10,11 @@
                 <ul class="navbar-nav">
                     
                     <% if(signed_in == null){ %>
-                        
+
                         </li>
                         <% } else  { %>
                             <% if (!signed_in) { %> 
-                                
+
                                 <li class="nav-item">
                                     <a class="nav-link" href="/sign-in">Sign-in</a>
                                 </li>
@@ -26,7 +25,7 @@
                                 </li>
                                 <% } else { %>
             
-                                    <!-- user profile page link -->
+                                <!-- user profile page link -->
                                  <li class="nav-item">
                                     <a class="nav-link" href="/userprofile">User</a>
                                 </li>
@@ -35,8 +34,7 @@
                                 <li class="nav-item">
                                     <a class="nav-link" href="/reportlittermenuhomepage">Report Litter</a>
                                 </li>
-            
-            
+                        
                                 <!-- pin to report page link -->
                                 <li class="nav-item">
                                     <a class="nav-link" href="/pinToReportPage">Pin Report</a>
@@ -49,28 +47,21 @@
             
                                 <li class="nav-item">
                                     <a class="nav-link" href="/sign-off">Sign-off</a>
-                                </li>
-                                
-                                <% } %>  
-                        
-                        <% } %>
-                        
-
-
-                    
-                </ul>
+                                </li>                               
+                                <% } %>                          
+                        <% } %> 
+                </ul>            
             </div>
         </div>
-                        <!-- todo: display links appropriate to the user's signed_in status -->
-                        <% if (signed_in) { %>
-                            <div style="margin-right: 20px; border-radius: 100px; background-color: green; width: 10px; height: 10px;">
-                                <!-- just a coloured dot to indicate sign in status -->
-                            </div>
-                        <% } else { %>
-                            <div style="margin-right: 20px; border-radius: 100px; background-color: red; width: 10px; height: 10px;">
-                                <!-- just a coloured dot to indicate sign in status -->
-                            </div>
-                        <% } %>
+        <!-- todo: display links appropriate to the user's signed_in status -->
+        <% if (signed_in) { %>
+            <div style="margin-right: 20px; border-radius: 100px; background-color: green; width: 10px; height: 10px;">
+                <!-- just a coloured dot to indicate sign in status -->
+            </div>
+        <% } else { %>
+            <div style="margin-right: 20px; border-radius: 100px; background-color: red; width: 10px; height: 10px;">
+                <!-- just a coloured dot to indicate sign in status -->
+            </div>
+        <% } %>
     </nav>
 </div>
-<!--**************************End Menu Bar****************************************-->

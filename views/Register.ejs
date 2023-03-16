@@ -22,12 +22,6 @@
     <body>
 
      <%- include('./partials/navbar.ejs', {signed_in: signed_in}) %>
-
-<!-- <div class="container mt-3">
-  <h2>Circle</h2>
-  <p>The .rounded-circle class shapes the image to a circle:</p>            
-  <img src="images\boy_emoji_avatar.jpg" class="rounded-circle" alt="avatar_emoji" width="304" height="236"> 
-</div> -->
         <div class="container mt-3">           
             <div class="container mt-3">
                 <h2 class="text-center">Create new Account</h3>
@@ -36,9 +30,10 @@
 
                   <div class="mb-3 mt-3">
                     <!-- Upload profile picture from PC: need backend for this process-->
-                    <label for="insterPicture" class="form-label">Add a profile image: </label>                    
-                    <input type="file" id="myFile" name="filename">
-                    <input type="submit">                                    
+                    <div class="mb-3">
+                      <label for="uploadImage" class="form-label">Add profile image:</label>
+                      <label for="formFileSm" class="form-label"></label>
+                      <input class="form-control" id="formFileMd" type="file">                                               
                   </div>
 
                   <div class="mb-3 mt-3">

@@ -19,22 +19,22 @@ router.get('/register', (req, res) => {
 
 // For report Litter Menu Homepage
 router.get('/reportlittermenuhomepage', (req, res) => {
-  res.render('reportlittermenuhomepage', { title: 'reportlittermenuhomepage' })
+  res.render('reportlittermenuhomepage', { title: 'reportlittermenuhomepage', signed_in: true })
 }) 
 
 // for pin to report page
 router.get('/pinToReportPage', (req, res) => {
-  res.render('pinToReportPage', { title: 'pinToReportPage' })
+  res.render('pinToReportPage', { title: 'pinToReportPage', signed_in: true })
 }) 
 
 // for blog page 
 router.get('/Blog', (req, res) => {
-  res.render('Blog', { title: 'Blog' })
+  res.render('Blog', { title: 'Blog', signed_in: false })
 }) 
 
 // for user profile page
 router.get('/userprofile', (req, res) => {
-  res.render('userprofile', { title: 'userprofile' })
+  res.render('userprofile', { title: 'userprofile', signed_in: true })
 }) 
 
 

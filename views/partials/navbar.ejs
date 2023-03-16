@@ -10,7 +10,45 @@
             <div class="collapse navbar-collapse" id="collapsibleNavbar">
                 <ul class="navbar-nav">
                     
-                    
+                    <% if(signed_in == null){ %>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/sign-in">Sign-in</a>
+                        </li>
+    
+                        <!-- Register link -->
+                        <li class="nav-item">
+                            <a class="nav-link" href="/register">Creante New Account</a>
+                        </li>
+                        <% } else { %>
+    
+                            <!-- user profile page link -->
+                         <li class="nav-item">
+                            <a class="nav-link" href="/userprofile">User</a>
+                        </li>
+    
+                        <!-- report Litter Menu Homepage link -->
+                        <li class="nav-item">
+                            <a class="nav-link" href="/reportlittermenuhomepage">Report Litter</a>
+                        </li>
+    
+    
+                        <!-- pin to report page link -->
+                        <li class="nav-item">
+                            <a class="nav-link" href="/pinToReportPage">Pin Report</a>
+                        </li>
+                        
+                        <!-- Blog page link -->
+                        <li class="nav-item">
+                            <a class="nav-link" href="/Blog">Blog</a>
+                        </li>
+    
+                        <li class="nav-item">
+                            <a class="nav-link" href="/sign-off">Sign-off</a>
+                        </li>
+                        
+                        <% } %>
+
+
                     <% if (!signed_in) { %> 
                     <li class="nav-item">
                         <a class="nav-link" href="/sign-in">Sign-in</a>

@@ -72,18 +72,12 @@
 </head>
 <body>
   <%- include('./partials/navbar.ejs', {signed_in: signed_in}) %>
-  
-
     <div id="map"></div>
-    <div class="w3-show-inline-block">
-      <div class="w3-bar">
-     <a href="/reportlittermenuhomepage" id="markerReport" class="btn btn-info" role="button">Report Place</a>
+    <a href="/reportlittermenuhomepage" id="markerReport" class="btn btn-info" role="button">Report Place</a>
      <!--marker.remove(); can be use, but I am not sure if user can click again and add another marker (because 'map.once'). The trash icon will be added to the icon instead of the text -->
-     <a href="" id="trashButton" class="" role="button">
+     <a href="/" id="trashButton" class="" role="button">
       <i class="fa fa-trash-o"></i>
      </a>
-    </div>
-  </div>
     <script>
       
         mapboxgl.accessToken = 'pk.eyJ1IjoiYmgzMDAiLCJhIjoiY2xlaWpsZW91MDI0dDQxbnI4aWNueTVneiJ9.u0cO3o-dzacQpUpt2rxLtA';

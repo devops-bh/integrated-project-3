@@ -51,7 +51,7 @@
   
   
     <div id="map"></div>
-    <a href="/reportlittermenuhomepage" id="markerReport" class="btn btn-info" role="button">Report Place</a>   
+    <a href="/reportlittermenuhomepage" id="markerReport" class="btn btn-info" role="button">Report Place</a>
     <script>
       
         mapboxgl.accessToken = 'pk.eyJ1IjoiYmgzMDAiLCJhIjoiY2xlaWpsZW91MDI0dDQxbnI4aWNueTVneiJ9.u0cO3o-dzacQpUpt2rxLtA';
@@ -134,14 +134,12 @@
                          '<td><button class="btn btn-danger btn-sm">Removed</button></td>'+
                          '</label>'+
                          '</table>'
-
                         
                     )
                 )
                 .addTo(map));
         });
-     
-    
+       
           
         // function addMarker() { // [refactor] there may be a proper way of attaching event listeners to the popup but this was the quickest/easiest way 
         //     // [todo] use a similar (or better) approach to get the event details e.g. name of event 

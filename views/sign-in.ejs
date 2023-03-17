@@ -26,17 +26,17 @@
     <div class="flex-container">
 
         <div class="container">
-            <form action="/sign-in" method="POST">
-                <form action="/action_page.php" class="was-validated">
+            <form action="/sign-in" method="POST" class="was-validated">
                     <div class="mb-3 mt-3">
-                      <label for="uname" class="form-label">Username:</label>
-                      <input type="text" class="form-control" id="uname" placeholder="Enter username" name="uname" required>
+                        <!-- the chances of people having the same email are slimmer -->
+                      <label for="email" class="form-label">email:</label>
+                      <input type="text" class="form-control" id="email" placeholder="Enter email" name="email" required>
                       <div class="valid-feedback">Valid.</div>
                       <div class="invalid-feedback">Please fill out this field.</div>
                     </div>
                     <div class="mb-3">
-                      <label for="pwd" class="form-label">Password:</label>
-                      <input type="password" class="form-control" id="pwd" placeholder="Enter password" name="pswd" required>
+                      <label for="password" class="form-label">Password:</label>
+                      <input type="password" class="form-control" id="password" placeholder="Enter password" name="password" required>
                       <div class="valid-feedback">Valid.</div>
                       <div class="invalid-feedback">Please fill out this field.</div>
                     </div>

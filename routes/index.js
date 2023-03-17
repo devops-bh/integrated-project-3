@@ -43,6 +43,11 @@ router.get('/sign-in', (req, res) => {
   res.render('sign-in', { title: 'Sign in', signed_in: false })
 }) 
 
+let hashedPassword; 
+bcrypt.hash("lecturer", 10).then(_hash =>{
+  hashedPassword = _hash
+  console.log(hashedPassword)
+})
 router.post('/sign-in', isSignedIn, (req, res) => {
   const { email, password } = req.body
   console.log(`Email: ${email}, password: ${password}`)
@@ -50,15 +55,12 @@ router.post('/sign-in', isSignedIn, (req, res) => {
     res.redirect('/') // todo: implement warning using the connect-flash package (I think res.render should be used to get rid of the resubmit form message)
     return;
   }
-  bcrypt.hash('lecturer', 1, (err, hashedPassword) => {
-    if (err) { throw (err); }
-    bcrypt.compare('lecturer', hashedPassword, (err, result) => {
-        if (err) { throw (err); }
-        req.session.signed_in = true 
+    bcrypt.compare(req.body.password, hashedPassword).then(function(result) {
+      console.log(hashedPassword, req.body.password)
+        if (result) req.session.signed_in = true 
         console.log("user has just signed in: ", result) 
-        res.render('index', {title: 'signed in as ross', signed_in: req.session.signed_in}) 
-    });
-  });
+        res.render('index', {title: `signed in as ${req.session.signed ? 'ross ': 'anon'}`, signed_in: req.session.signed_in}) 
+    }).catch(compareErr => console.log(compareErr));
 })
 
 router.get('/sign-off', isSignedIn, (req, res) => {

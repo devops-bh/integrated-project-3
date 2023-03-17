@@ -52,14 +52,14 @@ router.post('/sign-in', isSignedIn, (req, res) => {
   const { email, password } = req.body
   console.log(`Email: ${email}, password: ${password}`)
   if (email == "" || password == "") {
-    res.redirect('/') // todo: implement warning using the connect-flash package (I think res.render should be used to get rid of the resubmit form message)
+    res.redirect('/') // [todo] implement warning using the connect-flash package (I think res.render should be used to get rid of the resubmit form message)
     return;
   }
     bcrypt.compare(req.body.password, hashedPassword).then(function(result) {
       console.log(hashedPassword, req.body.password)
         if (result) req.session.signed_in = true 
         console.log("user has just signed in: ", result) 
-        res.render('index', {title: `signed in as ${req.session.signed ? 'ross ': 'anon'}`, signed_in: req.session.signed_in}) 
+        res.render('index', {title: `signed in as ${req.session.signed_in ? 'ross ': 'anon'}`, signed_in: req.session.signed_in, /* [todo] user.user_id */}) 
     }).catch(compareErr => console.log(compareErr));
 })
 

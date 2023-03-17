@@ -106,7 +106,6 @@
             showUserHeading: true
         })
         );
-          //test Giacomo
           // [refactor/feature] maybe introduce a "your markers" list 
           let othersMarkers = []
           let markers = []
@@ -115,7 +114,7 @@
 
           // [todo] I don't think this will get pre-existing markers so this will be for markers added when the user is looking at the map 
           let eventSource = new EventSource("/users/events/");
-          const userId = Math.random() * 10 // [refactor] will likely be generated via server side as a UUID  
+          const userId = Math.random() * 10 // [refactor] will be the user-table user_id obtained either via the locals object or <%= user_id %> 
 
           eventSource.onmessage = event => { // [todo] distinguish the users' already added markers from other users' markers 
             const parsedData = JSON.parse(event.data)

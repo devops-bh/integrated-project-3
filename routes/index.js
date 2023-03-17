@@ -2,6 +2,20 @@ var express = require('express');
 var router = express.Router();
 const bcrypt = require("bcrypt")
 const isSignedIn = require("./middleware").isSignedIn
+const mysql = require('mysql2');
+
+// create the connection to database
+// also see www.npmjs.com/package/mysql2#user-content-using-connection-pool
+require('dotenv').config()
+const indexConnection = mysql.createConnection({ // stupidly creating a new connection for quickness 
+ host: process.env.DATABASE_HOST,
+  user: process.env.DATABASE_USER,
+  password: process.env.DATABASE_PASSWORD,
+  database: process.env.DATABASE_NAME,
+  port: process.env.DATABASE_PORT
+});
+
+
 
 /* GET home page. */
 router.get('/', (req, res) => {
@@ -12,10 +26,44 @@ router.get('/', (req, res) => {
   res.render('index', { title: 'Litter Map', signed_in: false});
 });
 
-// For register page
 router.get('/register', (req, res) => {
   res.render('register', { title: 'register', signed_in: false })
 }) 
+
+router.post('/register', async (req, res) => {
+  const email = req.body.email  // get the value of the input field which has the "name" attribute from the form 
+  const password = req.body.password
+  // if DB becomes a bottleneck see www.npmjs.com/package/mysql2#user-content-using-promise-wrapper 
+  indexConnection.query('INSERT INTO `users`(userid, score, firstname, lastname, email, password, postcode, image_path, is_staff) VALUES (?,?)',
+                                            [0, 0, 'Jeff', 'Jefferson', email, password, "g23323", '', 0],  // insert data 
+      (err, results, fields) => { 
+          if (err) console.log(err); 
+          console.log(results, fields)
+          // respond to the user telling them they've been registered to our amazing web app 
+        });
+
+});
+
+
+// create the connection to database
+const connection = mysql.createConnection({
+  host: 'localhost',
+  user: 'root',
+  database: 'test'
+});
+
+// execute will internally call prepare and query
+connection.execute(
+  'INSERT INTO `users`(email, password) VALUES (?,?)',
+  ['ross@ip3.com', 'password'],
+  function(err, results, fields) {
+    console.log(results); // results contains rows returned by server
+    console.log(fields); // fields contains extra meta data about results, if available
+
+    // If you execute same statement again, it will be picked from a LRU cache
+    // which will save query preparation time and give better performance
+  }
+);
 
 // For report Litter Menu Homepage
 router.get('/reportlittermenuhomepage', (req, res) => {

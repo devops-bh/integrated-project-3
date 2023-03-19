@@ -15,8 +15,6 @@ const indexConnection = mysql.createConnection({ // stupidly creating a new conn
   port: process.env.DATABASE_PORT
 });
 
-
-
 /* GET home page. */
 router.get('/', (req, res) => {
   if (req.session.signed_in == true) {
@@ -33,20 +31,19 @@ router.get('/register', (req, res) => {
 router.post('/register', async (req, res) => {
   const email = req.body.email  // get the value of the input field which has the "name" attribute from the form 
   const password = req.body.password
-  // if DB becomes a bottleneck see www.npmjs.com/package/mysql2#user-content-using-promise-wrapper 
-  indexConnection.query(`INSERT INTO users
-   (user_id, score, firstname, lastname, email, password, postcode, image_path, is_staff) VALUES 
-                          ( DEFAULT, ?, ?, ?, ?, ?, ?, ?, ? )`,
-      // be careful; this the score field is the first element, not the user_id [refactor] maybe use an object literal 
-      [0, 0, 'Jeff2', 'Jefferson2', email, password, "g23323", '', 0],
-      (err, results, fields) => { 
-          if (err) console.log(err); 
-          console.log("Registeration: ", results, fields)
-          // respond to the user telling them they've been registered to our amazing web app 
-          res.send("You have registered, please sign in") // [todo] res.render the sign in form 
-        });
-
-});
+  bcrypt.hash(password, 10).then(_hash =>{
+    hashedPassword = _hash
+    console.log(hashedPassword)
+    indexConnection.query('INSERT INTO `users` (`user_id`, `score`, `firstname`, `lastname`, `email`, `password`, `postcode`, `image_path`, `is_staff`) VALUES (DEFAULT, DEFAULT, ?, ?, ?, ?, ?, ?, ?)',
+         ["Bob", "Bobby", "email@email.com", "password2", "postcode2", "", 0],
+        (err, results, fields) => { 
+            if (err) console.log(err); 
+            console.log("Registeration: ", results, fields)
+            // respond to the user telling them they've been registered to our amazing web app 
+            res.send("You have registered, please sign in") // [todo] res.render the sign in form 
+          });
+  })
+})
 
 // For report Litter Menu Homepage
 router.get('/reportlittermenuhomepage', (req, res) => {
@@ -73,6 +70,35 @@ router.get('/userprofile', (req, res) => {
 router.get('/sign-in', (req, res) => {
   res.render('sign-in', { title: 'Sign in', signed_in: false })
 }) 
+/* 
+indexConnection.query('SELECT * FROM `users` where email="testone@testone.testone"', 
+(err, results, fields) => { 
+  if (err) console.log(err); 
+  console.log(results)
+  console.log(fields)
+  //results.forEach(row => console.log(row.firstname))
+});
+/* 
+indexConnection.execute(
+  'SELECT * FROM `users` WHERE `email` = ?',
+  ["testone@testone.testone"], (error, results, fields) => {
+      if (error) console.log("Error: ", error); 
+      console.log(results) // []
+      console.log(fields) 
+      // we care about grabbing the user using the email that was put into the form 
+      // at the moment we are trying to get a list of users from the database 
+      // I dont know if we are getting a single item list or a single item
+      //results.forEach(row => console.log(row.firstname))
+      /* 
+      bcrypt.compare(req.body.password, hashedPassword).then(function(result) {
+        console.log(hashedPassword, req.body.password)
+          if (result) req.session.signed_in = true 
+          console.log("user has just signed in: ", result) 
+          res.render('index', {title: `signed in as ${req.session.signed_in ? 'ross ': 'anon'}`, signed_in: req.session.signed_in, /* [todo] user.user_id *}) 
+      }).catch(compareErr => console.log(compareErr));
+      *
+    });
+  */ 
 
 let hashedPassword; 
 bcrypt.hash("lecturer", 10).then(_hash =>{
@@ -86,12 +112,37 @@ router.post('/sign-in', isSignedIn, (req, res) => {
     res.redirect('/') // [todo] implement warning using the connect-flash package (I think res.render should be used to get rid of the resubmit form message)
     return;
   }
-    bcrypt.compare(req.body.password, hashedPassword).then(function(result) {
-      console.log(hashedPassword, req.body.password)
-        if (result) req.session.signed_in = true 
-        console.log("user has just signed in: ", result) 
-        res.render('index', {title: `signed in as ${req.session.signed_in ? 'ross ': 'anon'}`, signed_in: req.session.signed_in, /* [todo] user.user_id */}) 
-    }).catch(compareErr => console.log(compareErr));
+  /* 
+  [{
+    username: kjiosjsd
+  }, {username: owkdasopksdop}]
+
+  <xml>
+    <result>
+      <object><username>kjiosjsd</username></object>
+      <object><username>kjiosjsd</username></object>
+      <object><username>kjiosjsd</username></object>
+      <object><username>kjiosjsd</username></object>
+    </result>
+  </xml>
+  */
+
+/* 
+    connection.execute(
+  'SELECT * FROM `users` WHERE `email` = ?',
+  [email], (error, results, fields) => {
+      if (err) console.log("Error: ", err); 
+      console.log(fields) 
+      //results.forEach(row => console.log(row.firstname))
+      /* 
+      bcrypt.compare(req.body.password, hashedPassword).then(function(result) {
+        console.log(hashedPassword, req.body.password)
+          if (result) req.session.signed_in = true 
+          console.log("user has just signed in: ", result) 
+          res.render('index', {title: `signed in as ${req.session.signed_in ? 'ross ': 'anon'}`, signed_in: req.session.signed_in, /* [todo] user.user_id *}) 
+      }).catch(compareErr => console.log(compareErr));
+      *
+    });*/
 })
 
 router.get('/sign-off', isSignedIn, (req, res) => {

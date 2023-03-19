@@ -100,6 +100,18 @@ indexConnection.execute(
     });
   */ 
 
+// example of getting the user from the database using the email which was inputted into the sign in form 
+indexConnection.execute('SELECT * FROM `users` WHERE email=?', ["testingantisqlinjection@email."], 
+  (err, results, fields) => { 
+    if (err) console.log(err)
+    // console.log(results) // an array of one user e.g. [{user}]
+    //results.forEach(result => console.log(result)) // 
+    // alternatively you could do for (let i ...) { let result = results[i] }
+    // since we are assuming emails are unique, you can simply do 
+    const user = results[0]
+    console.log("USER: ", user)
+});
+
 let hashedPassword; 
 bcrypt.hash("lecturer", 10).then(_hash =>{
   hashedPassword = _hash

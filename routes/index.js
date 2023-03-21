@@ -35,7 +35,8 @@ router.post('/register', async (req, res) => {
     hashedPassword = _hash
     console.log(hashedPassword)
     indexConnection.execute('INSERT INTO `users` (`user_id`, `score`, `firstname`, `lastname`, `email`, `password`, `postcode`, `image_path`, `is_staff`) VALUES (DEFAULT, DEFAULT, ?, ?, ?, ?, ?, ?, ?)',
-         [email + "firstname", "Bobby", email, hashedPassword, "postcode2", "", 0],
+         //[email + "firstname", "Bobby", email, hashedPassword, "postcode2", "", 0],
+         [email + firstname, lastname, email, hashedPassword, "Postcode1", "", 0],
         (err, results, fields) => { 
             if (err) console.log(err); 
             console.log("Registeration: ", results, fields)

@@ -36,7 +36,7 @@ router.post('/register', async (req, res) => {
     console.log(hashedPassword)
     indexConnection.execute('INSERT INTO `users` (`user_id`, `score`, `firstname`, `lastname`, `email`, `password`, `postcode`, `image_path`, `is_staff`) VALUES (DEFAULT, DEFAULT, ?, ?, ?, ?, ?, ?, ?)',
          //[email + "firstname", "Bobby", email, hashedPassword, "postcode2", "", 0],
-         [email + firstname, lastname, email, hashedPassword, "Postcode1", "", 0],
+         [firstname, lastname, email, hashedPassword, "Postcode1", "", 0],
         (err, results, fields) => { 
             if (err) console.log(err); 
             console.log("Registeration: ", results, fields)
@@ -102,6 +102,7 @@ indexConnection.execute(
   */ 
 
 // example of getting the user from the database using the email which was inputted into the sign in form 
+//indexConnection.execute('SELECT * FROM `users` WHERE email=?', ["testingantisqlinjection@email."],
 indexConnection.execute('SELECT * FROM `users` WHERE email=?', ["testingantisqlinjection@email."], 
   (err, results, fields) => { 
     if (err) console.log(err)
@@ -123,6 +124,7 @@ router.post('/sign-in', isSignedIn, (req, res) => {
   console.log(`Email: ${email}, password: ${password}`)
   if (email == "" || password == "") {
     console.log("Test Sign-in")
+    res.send("You are trying to sign in")
     res.redirect('/reportLitterMenuHomepage') // Redirect to reportLitter[todo] implement warning using the connect-flash package (I think res.render should be used to get rid of the resubmit form message)
     return;
   }

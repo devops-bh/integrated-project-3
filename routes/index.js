@@ -41,7 +41,7 @@ router.post('/register', async (req, res) => {
             if (err) console.log(err); 
             console.log("Registeration: ", results, fields)
             // respond to the user telling them they've been registered to our amazing web app 
-            res.send("You have registered, please sign in") // [todo] res.render the sign in form 
+            res.send("Check the database") // [todo] res.render the sign in form 
           });
   })
 })

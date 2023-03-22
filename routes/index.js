@@ -36,7 +36,7 @@ router.post('/register', async (req, res) => {
     console.log(hashedPassword)
     indexConnection.execute('INSERT INTO `users` (`user_id`, `score`, `firstname`, `lastname`, `email`, `password`, `postcode`, `image_path`, `is_staff`) VALUES (DEFAULT, DEFAULT, ?, ?, ?, ?, ?, ?, ?)',
          //[email + "firstname", "Bobby", email, hashedPassword, "postcode2", "", 0],
-         ["", "", firstname, lastname, email, hashedPassword, "Postcode1", "", 0],
+         [firstname, lastname, email, hashedPassword, "Postcode1", "", 0],
         (err, results, fields) => { 
             if (err) console.log(err); 
             console.log("Registeration: ", results, fields)
@@ -77,9 +77,8 @@ indexConnection.query('SELECT * FROM `users` where email="testone@testone.teston
   if (err) console.log(err); 
   console.log(results)
   console.log(fields)
-  //results.forEach(row => console.log(row.firstname))
+  results.forEach(row => console.log(row.firstname))
 });
-/* 
 indexConnection.execute(
   'SELECT * FROM `users` WHERE `email` = ?',
   ["testone@testone.testone"], (error, results, fields) => {
@@ -103,6 +102,7 @@ indexConnection.execute(
 
 // example of getting the user from the database using the email which was inputted into the sign in form 
 //indexConnection.execute('SELECT * FROM `users` WHERE email=?', ["testingantisqlinjection@email."],
+/* 
 indexConnection.execute('SELECT * FROM `users` WHERE email=?', ["testingantisqlinjection@email."], 
   (err, results, fields) => { 
     if (err) console.log(err)
@@ -113,7 +113,7 @@ indexConnection.execute('SELECT * FROM `users` WHERE email=?', ["testingantisqli
     const user = results[0]
     console.log("USER: ", user)
 });
-
+*/
 let hashedPassword; 
 bcrypt.hash("lecturer", 10).then(_hash =>{
   hashedPassword = _hash
@@ -125,7 +125,7 @@ router.post('/sign-in', isSignedIn, (req, res) => {
   if (email == "" || password == "") {
     console.log("Test Sign-in")
     res.send("You are trying to sign in")
-    res.redirect('/reportLitterMenuHomepage') // Redirect to reportLitter[todo] implement warning using the connect-flash package (I think res.render should be used to get rid of the resubmit form message)
+    res.redirect('/') // Redirect to reportLitter[todo] implement warning using the connect-flash package (I think res.render should be used to get rid of the resubmit form message)
     return;
   }
   /* 
@@ -142,8 +142,6 @@ router.post('/sign-in', isSignedIn, (req, res) => {
     </result>
   </xml>
   */
-
-/* 
     connection.execute(
   'SELECT * FROM `users` WHERE `email` = ?',
   [email], (error, results, fields) => {
@@ -157,8 +155,8 @@ router.post('/sign-in', isSignedIn, (req, res) => {
           console.log("user has just signed in: ", result) 
           res.render('index', {title: `signed in as ${req.session.signed_in ? 'ross ': 'anon'}`, signed_in: req.session.signed_in, /* [todo] user.user_id *}) 
       }).catch(compareErr => console.log(compareErr));
-      *
-    });*/
+      */
+    });
 })
 
 router.get('/sign-off', isSignedIn, (req, res) => {

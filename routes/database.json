@@ -1,1 +1,1 @@
-{"users":[{"user_id":"94ffaaed-2db7-4837-87b1-a5c2e5ad4c80","email":"testingjsonfile@email.com","hashedPassword":"$2b$10$6.0ynSlRCEGMBLOQpKyNmel.2oI8rNz6Z3vs1Wu5aOx3PL6sB5xwK"}],"volunteers":[],"litter_locations":[]}
+{"users":[{"user_id":"34c6c295-279b-4cfa-83ca-fa6c3acc4eff","email":"testingjsonfile@email.com","password":"$2b$10$L1JbuHdBd8tu7zoD12QcYusvJ1N.dUAwDAXlvbxUt9AklriKBi/Nq"}],"volunteers":[],"litter_locations":[]}

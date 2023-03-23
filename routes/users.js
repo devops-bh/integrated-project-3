@@ -5,30 +5,6 @@ const EventEmitter = require("events")
 class MarkerEmitter extends EventEmitter {} 
 const markerEmitter = new MarkerEmitter() 
 
-//const mysql = require('mysql2');
-
-// create the connection to database
-// also see www.npmjs.com/package/mysql2#user-content-using-connection-pool
-/* 
-require('dotenv').config()
-const connection = mysql.createConnection({
-  host: process.env.DATABASE_HOST,
-  user: process.env.DATABASE_USER,
-  password: process.env.DATABASE_PASSWORD,
-  database: process.env.DATABASE_NAME,
-  port: process.env.DATABASE_PORT
-});
-*/
-/* 
-// if DB becomes a bottleneck see www.npmjs.com/package/mysql2#user-content-using-promise-wrapper 
-connection.query('SELECT * FROM `users`', 
-(err, results, fields) => { 
-  if (err) console.log(err); 
-  //results.forEach(row => console.log(row.firstname))
-});
-*/
-
-
 /* GET users listing. */
 router.get('/', function(req, res, next) {
   res.send('respond with a resource');

@@ -27,7 +27,7 @@ router.post('/register', async (req, res) => {
     fs.readFile(path.join(__dirname, "./database.json"), 'utf8', (err, data) => {
         if (err) console.log(err)
         const parsedData = JSON.parse(data)
-        parsedData.users.push({user_id: uuid(), email, hashedPassword}) 
+        parsedData.users.push({user_id: uuid(), email, password: hashedPassword}) 
         const newData = parsedData
         fs.writeFile(path.join(__dirname, "./database.json"), JSON.stringify(newData), err => {
           if (err) {
@@ -68,11 +68,6 @@ router.get('/sign-in', (req, res) => {
   res.render('sign-in', { title: 'Sign in', signed_in: false })
 }) 
 
-let hashedPassword; 
-bcrypt.hash("lecturer", 10).then(_hash =>{
-  hashedPassword = _hash
-  console.log(hashedPassword)
-})
 router.post('/sign-in', isSignedIn, (req, res) => {
   const { email, password } = req.body
   console.log(`Email: ${email}, password: ${password}`)
@@ -82,7 +77,10 @@ router.post('/sign-in', isSignedIn, (req, res) => {
     res.redirect('/') // Redirect to reportLitter[todo] implement warning using the connect-flash package (I think res.render should be used to get rid of the resubmit form message)
     return;
   }
+  res.send("todo")
 })
+
+
 
 router.get('/sign-off', isSignedIn, (req, res) => {
   req.session.signed_in = false

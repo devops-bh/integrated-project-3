@@ -2,6 +2,9 @@ var express = require('express');
 var router = express.Router();
 const bcrypt = require("bcrypt")
 const isSignedIn = require("./middleware").isSignedIn
+const fs = require('fs');
+const path = require("path")
+const uuid = require("uuid").v4
 
 /* GET home page. */
 router.get('/', (req, res) => {
@@ -19,10 +22,23 @@ router.get('/register', (req, res) => {
 router.post('/register', async (req, res) => {
   const email = req.body.email  // get the value of the input field which has the "name" attribute from the form 
   const password = req.body.password
-  bcrypt.hash(password, 10).then(_hash =>{
-    hashedPassword = _hash
-    console.log(hashedPassword)
-
+  bcrypt.hash(password, 10).then(hashedPassword => {
+    // [refactor] maybe use async/await or promises? 
+    fs.readFile(path.join(__dirname, "./database.json"), 'utf8', (err, data) => {
+        if (err) console.log(err)
+        const parsedData = JSON.parse(data)
+        parsedData.users.push({user_id: uuid(), email, hashedPassword}) 
+        const newData = parsedData
+        fs.writeFile(path.join(__dirname, "./database.json"), JSON.stringify(newData), err => {
+          if (err) {
+            console.error(err);
+            // [todo] res.render or redirect with "something went wrong" message 
+            res.send(err)
+          } else {
+            res.redirect('sign-in')            
+          }
+        });
+      })
   })
 })
 

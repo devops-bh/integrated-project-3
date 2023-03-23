@@ -77,7 +77,18 @@ router.post('/sign-in', isSignedIn, (req, res) => {
     res.redirect('/') // Redirect to reportLitter[todo] implement warning using the connect-flash package (I think res.render should be used to get rid of the resubmit form message)
     return;
   }
-  res.send("todo")
+      fs.readFile(path.join(__dirname, "./database.json"), 'utf8', (err, data) => {
+        if (err) console.log(err)
+        const parsedData = JSON.parse(data)
+        // assuming the user is signed in; [todo] should probably handle cases where the inputted email does not exist
+        parsedData.users.map(user => {
+          bcrypt.compare(req.body.password, user.password).then(function(result) {
+            if (result) req.session.signed_in = true 
+              console.log("user has just signed in: ", result) 
+              res.render('index', {title: `signed in as ${req.session.signed_in ? 'ross ': 'anon'}`, signed_in: req.session.signed_in, /* [todo] user.user_id */}) 
+          }).catch(compareErr => console.log(compareErr));
+        })
+    })
 })
 
 

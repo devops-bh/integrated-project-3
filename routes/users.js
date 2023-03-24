@@ -1,3 +1,5 @@
+const fs = require("fs")
+const path = require("path")
 var express = require('express');
 var router = express.Router();
 const isSignedIn = require("./middleware").isSignedIn
@@ -16,10 +18,25 @@ let markers = []; // [refactor] perhaps call these litter_event or litter_locati
 router.post('/add-marker', isSignedIn, async (req, res) => {
   const { userId, lat, lng } = req.body
   const newMarker = {userId, lat: req.body.lat, lng: req.body.lng}  
-  markers.push(newMarker);
-  markerEmitter.emit("marker", newMarker) 
-  console.log(` User: ${newMarker.userId} Lat: ${newMarker.lat}, Lng: ${newMarker.lng}`)
+    fs.readFile(path.join(__dirname, "./database.json"), 'utf8', (err, data) => {
+        if (err) console.log(err)
+        const parsedData = JSON.parse(data)
+        parsedData.litter_locations.push(newMarker) 
+        const newData = parsedData
+        fs.writeFile(path.join(__dirname, "./database.json"), JSON.stringify(newData), err => {
+          if (err) {
+            console.error(err);
+            // [todo] res.render or redirect with "something went wrong" message 
+            res.send(err)
+          } else {
+            console.log(` User: ${newMarker.userId} Lat: ${newMarker.lat}, Lng: ${newMarker.lng} :)`)
+            markerEmitter.emit("marker", newMarker) 
+          }
+        });
+      })
 })  
+
+
 
 router.get("/events", (req, res) => {
   res.writeHead(200, {

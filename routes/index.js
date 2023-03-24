@@ -10,6 +10,7 @@ const uuid = require("uuid").v4
 router.get('/', (req, res) => {
   if (req.session.signed_in == true) {
     res.render('index', { title: 'Litter Map', signed_in: true});
+    console.log("Signed in user was navigated to the index view")
     return; 
   }
   res.render('index', { title: 'Litter Map', signed_in: false});
@@ -82,7 +83,8 @@ router.post('/sign-in', isSignedIn, (req, res) => {
           bcrypt.compare(req.body.password, user.password).then(function(result) {
             if (result) req.session.signed_in = true 
               console.log("user has just signed in: ", result) 
-              res.render('index', {title: `signed in as ${req.session.signed_in ? 'ross ': 'anon'}`, signed_in: req.session.signed_in, /* [todo] user.user_id */}) 
+              //res.render('index', {title: `signed in as ${req.session.signed_in ? 'ross ': 'anon'}`, signed_in: req.session.signed_in, /* [todo] user.user_id */}) 
+              res.redirect('/')
           }).catch(compareErr => console.log(compareErr));
         })
     })

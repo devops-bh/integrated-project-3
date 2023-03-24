@@ -120,7 +120,7 @@
             _marker.addTo(map)
           };
           //click on the map, then click on the "Add new Marker" to add new marker       
-          map.once('click', e => {
+          map.on('click', e => {
           // [refactor] (quick fix) I think we should be using layers (a special MapboxGL concept)  
           if (e.originalEvent.target.parentNode.parentNode.classList.contains("mapboxgl-marker")) {
             return; 
@@ -177,7 +177,7 @@
 
 
                           '<div class="text-center">'+
-                            '<button type="cancel" class="btn btn-danger" onclick="history.back()">Cancel</button>'+
+                            '<button type="cancel" class="btn btn-danger" onclick="removeMarker()">Cancel</button>'+
                             '<button type="submit" id="add-marker" onClick="addMarker()" class="btn btn-success" >Submit</button>'+
                           '</div>'+
 
@@ -187,7 +187,13 @@
                 )
                 .addTo(map));
         });
-       
+
+        function removeMarker()
+         {
+          //remove all markers added by user 
+           markers.forEach((marker) => marker.remove());  
+         };
+      
           
          function addMarker() { // [refactor] there may be a proper way of attaching event listeners to the popup but this was the quickest/easiest way 
              // [todo] use a similar (or better) approach to get the event details e.g. name of event 
@@ -208,6 +214,9 @@
                .catch((error) => {
                  console.error("Error:", error);
                });
+               //remove all unsubmitted markers
+               markers.forEach((marker) => marker.remove());  
+
            }
 
     </script>

@@ -97,10 +97,10 @@ router.post('/sign-in', isSignedIn, (req, res) => {
         // assuming the user is signed in; [todo] should probably handle cases where the inputted email does not exist
         parsedData.users.map(user => {
           bcrypt.compare(req.body.password, user.password).then(function(result) {
-            if (result) req.session.signed_in = true 
+            if (result) {req.session.signed_in = true 
               console.log("user has just signed in: ", result) 
               //res.render('index', {title: `signed in as ${req.session.signed_in ? 'ross ': 'anon'}`, signed_in: req.session.signed_in, /* [todo] user.user_id */}) 
-              res.redirect('/')
+              res.redirect('/')}
           }).catch(compareErr => console.log(compareErr));
         })
     })

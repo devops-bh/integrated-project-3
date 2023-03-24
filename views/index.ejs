@@ -66,7 +66,6 @@
              
               }
 
-
       </style>
 
 </head>
@@ -147,9 +146,7 @@
                         `<div class="text-center">
                           <input type="text" name="name" placeholder="name">
                          </div>` + // [refactor] maybe not the most readable (or secure) way (also input type="submit" > button?) 
-                         // do we want our own report litter page? 
                          '<br>'+
-
                          '<table style="width:100%">'+
                          '<tr>'+   
                          '<td><button id="add-marker" onClick="addMarker()" class="btn btn-success btn-sm">Litter</button></td>'+                        
@@ -159,63 +156,32 @@
                          '<td><button class="btn btn-danger btn-sm">Removed</button></td>'+
                          '</label>'+
                          '</table>'
-                        
                     )
                 )
                 .addTo(map));
         });
        
           
-        // function addMarker() { // [refactor] there may be a proper way of attaching event listeners to the popup but this was the quickest/easiest way 
-        //     // [todo] use a similar (or better) approach to get the event details e.g. name of event 
-        //     const { lat, lng } = state.newMarkerToAdd
-        //     const data = { userId, lat, lng }
-        //     fetch("users/add-marker", {
-        //       method: "POST", // or 'PUT'
-        //       headers: {
-        //         "Content-Type": "application/json",
-        //       },
-        //       body: JSON.stringify(data),
-        //     })
-        //       .then((response) => response.json())
-        //       .then((data) => {
-        //         console.log("Success:", data);
-        //         alert("Your marker has been added")
-        //       })
-        //       .catch((error) => {
-        //         console.error("Error:", error);
-        //       });
-        //   }
-
-
-             document.getElementById('markerReport').addEventListener('click', () => {
-            // 1, User clicks on the map and a marker appears
-            // 2. user clicks on the button report litter (this green one), this sends him to another page
-            // 3. user fills ale and done
-           
-            const { lat, lng } = state.newMarkerToAdd
-            const data = { userId, lat, lng }
-            fetch("users/add-marker", {
-              method: "POST", // or 'PUT'
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify(data),
-            })
-              .then((response) => response.json())
-              .then((data) => {
-                console.log("Success:", data);
-                alert("Your marker has been added")
-              })
-              .catch((error) => {
-                console.error("Error:", error);
-              });
-            
-             
-
-
-             });
-
+         function addMarker() { // [refactor] there may be a proper way of attaching event listeners to the popup but this was the quickest/easiest way 
+             // [todo] use a similar (or better) approach to get the event details e.g. name of event 
+             const { lat, lng } = state.newMarkerToAdd
+             const data = { userId, lat, lng }
+             fetch("users/add-marker", {
+               method: "POST", // or 'PUT'
+               headers: {
+                 "Content-Type": "application/json",
+               },
+               body: JSON.stringify(data),
+             })
+               .then((response) => response.json())
+               .then((data) => {
+                 console.log("Success:", data);
+                 alert("Your marker has been added")
+               })
+               .catch((error) => {
+                 console.error("Error:", error);
+               });
+           }
 
     </script>
   </body>

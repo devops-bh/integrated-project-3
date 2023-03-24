@@ -125,7 +125,7 @@
           if (e.originalEvent.target.parentNode.parentNode.classList.contains("mapboxgl-marker")) {
             return; 
           } 
-          const signed_in = <%= signed_in %>;
+          const signed_in = <%= signed_in %>;  
           if (!signed_in) {
             alert("Please sign in");
             return;
@@ -190,7 +190,7 @@
 
         function removeMarker()
          {
-          //remove all markers added by user 
+          // remove all markers added by user 
            markers.forEach((marker) => marker.remove());  
          };
       

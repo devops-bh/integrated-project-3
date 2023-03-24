@@ -42,10 +42,7 @@ router.post('/register', async (req, res) => {
   })
 })
 
-// For report Litter Menu Homepage
-router.get('/reportlittermenuhomepage', (req, res) => {
-  res.render('reportlittermenuhomepage', { title: 'reportlittermenuhomepage', signed_in: true })
-}) 
+
 
 // for pin to report page
 router.get('/reportList', (req, res) => {

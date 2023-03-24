@@ -105,10 +105,22 @@
           let markers = []
 
           // [todo] fetch the markers which were added whilst the user was not looking at the map (e.g. on another page) 
-
+          fetch("/markers") // make a request to the server 
+            .then((response) => response.json())
+            .then((data) => {
+              console.log(data)
+              // we got the markers, now time to display 
+              let markers = data
+              markers.map(marker => {
+                let lng = marker.lng 
+                let lat = marker.lat
+                let _marker = new mapboxgl.Marker({ scale: 2, color: "orange" }).setLngLat(new mapboxgl.LngLat(lng, lat))
+                _marker.addTo(map)
+              })
+            });
+            
           // [todo] I don't think this will get pre-existing markers so this will be for markers added when the user is looking at the map 
           let eventSource = new EventSource("/users/events/");
-          const userId = Math.random() * 10 // [refactor] will be the user-table user_id obtained either via the locals object or < %= user_id %> 
 
           eventSource.onmessage = event => { // [todo] distinguish the users' already added markers from other users' markers 
             const parsedData = JSON.parse(event.data)
@@ -168,38 +180,41 @@
                           '<div class="form-check form-check-inline">'+
                             '<input  class="form-check-input" type="radio" id="inlineCheckbox2" name="optradio" value="option2">'+
                             '<label class="form-check-label" for="inlineCheckbox2">Medium</label>'+
-                          '</div>'+
-                          '<div class="form-check form-check-inline">'+
-                            '<input class="form-check-input" type="radio" id="inlineCheckbox3" name="optradio" value="option3">'+
-                            '<label class="form-check-label" for="inlineCheckbox3">Large</label>'+
-                          '</div>'+
-                          '</div>'+
-
-
-                          '<div class="text-center">'+
-                            '<button type="cancel" class="btn btn-danger" onclick="removeMarker()">Cancel</button>'+
-                            '<button type="submit" id="add-marker" onClick="addMarker()" class="btn btn-success" >Submit</button>'+
-                          '</div>'+
-
-                          '</form>'+
-                          '</div>'
-                    )
-                )
+                            '</div>'+
+                            '<div class="form-check form-check-inline">'+
+                              '<input class="form-check-input" type="radio" id="inlineCheckbox3" name="optradio" value="option3">'+
+                              '<label class="form-check-label" for="inlineCheckbox3">Large</label>'+
+                              '</div>'+
+                              '</div>'+
+                              
+                              
+                              '<div class="text-center">'+
+                                '<button type="cancel" class="btn btn-danger" onclick="removeMarker()">Cancel</button>'+
+                                '<button type="submit" id="add-marker" onClick="addMarker()" class="btn btn-success" >Submit</button>'+
+                                '</div>'+
+                                
+                                '</form>'+
+                                '</div>'
+                                )
+                                )
                 .addTo(map));
         });
-
+        
         function removeMarker()
-         {
+        {
           // remove all markers added by user 
-           markers.forEach((marker) => marker.remove());  
-         };
-      
-          
-         function addMarker() { // [refactor] there may be a proper way of attaching event listeners to the popup but this was the quickest/easiest way 
-             // [todo] use a similar (or better) approach to get the event details e.g. name of event 
-             const { lat, lng } = state.newMarkerToAdd
-             const data = { userId, lat, lng }
-             fetch("users/add-marker", {
+          markers.forEach((marker) => marker.remove());  
+        };
+        
+        let userId = -1; 
+        <% if (user_id && user_id != -1) { %>
+          userId = user_id
+        <% } %>
+        function addMarker() { // [refactor] there may be a proper way of attaching event listeners to the popup but this was the quickest/easiest way 
+          // [todo] use a similar (or better) approach to get the event details e.g. name of event 
+          const { lat, lng } = state.newMarkerToAdd
+          const data = { userId, lat, lng }
+          fetch("users/add-marker", {
                method: "POST", // or 'PUT'
                headers: {
                  "Content-Type": "application/json",
@@ -216,7 +231,6 @@
                });
                //remove all unsubmitted markers
                markers.forEach((marker) => marker.remove());  
-
            }
 
     </script>

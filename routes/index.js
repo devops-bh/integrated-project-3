@@ -3,18 +3,28 @@ var router = express.Router();
 const bcrypt = require("bcrypt")
 const isSignedIn = require("./middleware").isSignedIn
 const fs = require('fs');
-const path = require("path")
+const path = require("path");
+const { parse } = require('path');
 const uuid = require("uuid").v4
 
 /* GET home page. */
 router.get('/', (req, res) => {
   if (req.session.signed_in == true) {
-    res.render('index', { title: 'Litter Map', signed_in: true});
-    console.log("Signed in user was navigated to the index view")
+    res.render('index', { title: 'Litter Map', signed_in: true, user_id: req.session.user_id});
+    console.log("Signed in was navigated to the index view")
     return; 
   }
-  res.render('index', { title: 'Litter Map', signed_in: false});
+  res.render('index', { title: 'Litter Map', signed_in: false, user_id: -1});
 });
+
+router.get('/markers', (req, res) => {
+    fs.readFile(path.join(__dirname, "./database.json"), 'utf8', (err, data) => {
+      if (err) console.log(err)
+        const parsedData = JSON.parse(data); 
+        const markers = parsedData.litter_locations
+        res.send(markers);
+      })
+})
 
 router.get('/register', (req, res) => {
   res.render('register', { title: 'register', signed_in: false })
@@ -28,7 +38,10 @@ router.post('/register', async (req, res) => {
     fs.readFile(path.join(__dirname, "./database.json"), 'utf8', (err, data) => {
         if (err) console.log(err)
         const parsedData = JSON.parse(data)
-        parsedData.users.push({user_id: uuid(), email, password: hashedPassword}) 
+        const _uuid = uuid() 
+        parsedData.users.push({user_id: _uuid, email, password: hashedPassword}) 
+        req.session.user_id = _uuid
+        //converting data from user to JSON? or parser send data to other to show it is ready
         const newData = parsedData
         fs.writeFile(path.join(__dirname, "./database.json"), JSON.stringify(newData), err => {
           if (err) {
@@ -43,7 +56,10 @@ router.post('/register', async (req, res) => {
   })
 })
 
-
+// For report Litter Menu Homepage
+router.get('/reportlittermenuhomepage', (req, res) => {
+  res.render('reportlittermenuhomepage', { title: 'reportlittermenuhomepage', signed_in: true })
+}) 
 
 // for pin to report page
 router.get('/reportList', (req, res) => {

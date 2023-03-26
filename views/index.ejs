@@ -79,6 +79,13 @@
         // [refactor] this was the quickest/easiest way to implement getting the marker's details and sending them to the server, there may be alternative (better) approaches  
           let state = { newMarkerToAdd: null }
 
+          // be careful, as one of these are obtained from the server; potential [refactor]
+        let is_staff = false; 
+        <% if (is_staff) { %>
+          is_staff = true
+        <% } %>
+        console.log("This user is staff? ", is_staff)
+
         const map = new mapboxgl.Map({
             container: 'map', // container ID
             // Choose from Mapbox's core styles, or make your own style with Mapbox Studio

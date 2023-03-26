@@ -85,12 +85,6 @@ router.get('/sign-in', (req, res) => {
 router.post('/sign-in', isSignedIn, (req, res) => {
   const { email, password } = req.body
   console.log(`Email: ${email}, password: ${password}`)
-  if (email == "" || password == "") {
-    console.log("Test Sign-in")
-    res.send("You are trying to sign in")
-    res.redirect('/') // Redirect to reportLitter[todo] implement warning using the connect-flash package (I think res.render should be used to get rid of the resubmit form message)
-    return;
-  }
       fs.readFile(path.join(__dirname, "./database.json"), 'utf8', (err, data) => {
         if (err) console.log(err)
         const parsedData = JSON.parse(data)

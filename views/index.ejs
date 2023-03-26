@@ -121,7 +121,17 @@
               markers.map(marker => {
                 let lng = marker.lng 
                 let lat = marker.lat
-                let _marker = new mapboxgl.Marker({ scale: 2, color: "orange" }).setLngLat(new mapboxgl.LngLat(lng, lat))
+                let _marker = new mapboxgl.Marker({ scale: 2, color: "orange" }).setLngLat(new mapboxgl.LngLat(lng, lat)).setPopup(new mapboxgl.Popup().setHTML(
+                              '<form>'+
+                              '<div class="text-center">'+
+                                '<button type="submit" class="btn btn-success" button style="background-color:blue">Join Event</button>'+
+                                '<button type="cancel" class="btn btn-danger">Remove</button>'+
+                                '<button type="submit" id="add-marker" class="btn btn-success" >Clean</button>'+
+                                '</div>'+
+                                
+                                '</form>'
+                                )
+                                )
                 _marker.addTo(map)
               })
             });
@@ -134,7 +144,17 @@
             const { lat, lng } = parsedData.marker
             let lngLat = { lng: lng, lat: lat }
             console.log("New marker added: ", lngLat)
-            let _marker = new mapboxgl.Marker({ scale: 2, color: "orange" }).setLngLat(lngLat)
+            let _marker = new mapboxgl.Marker({ scale: 2, color: "orange" }).setLngLat(lngLat).setPopup(new mapboxgl.Popup().setHTML(
+                              '<form>'+
+                              '<div class="text-center">'+
+                                '<button type="submit" class="btn btn-success" button style="background-color:blue">Join Event</button>'+
+                                '<button type="cancel" class="btn btn-danger">Remove</button>'+
+                                '<button type="submit" id="add-marker" class="btn btn-success" >Clean</button>'+
+                                '</div>'+
+                                
+                                '</form>'
+                                )
+                                )
             // [todo] set the popup here to allow a user to edit their marked litter event? 
             _marker.addTo(map)
           };

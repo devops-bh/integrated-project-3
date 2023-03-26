@@ -12,9 +12,9 @@ router.get('/', (req, res) => {
   if (req.session.signed_in == true) {
     res.render('index', { title: 'Litter Map', signed_in: true, user_id: req.session.user_id});
     console.log("Signed in was navigated to the index view")
-    return; 
+  } else {
+    res.render('index', { title: 'Litter Map', signed_in: false, user_id: -1});
   }
-  res.render('index', { title: 'Litter Map', signed_in: false, user_id: -1});
 });
 
 router.get('/markers', (req, res) => {

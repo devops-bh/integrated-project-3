@@ -15,7 +15,39 @@
 
     <body>
         <%- include('./partials/navbar.ejs', {signed_in: signed_in}) %>
-        <p>Report Litter Menu Homepage</p>
+        <div class="list-group">
+            <h2 class="text-center">Report List</h3>
+
+            <a href="#" class="list-group-item list-group-item-action active" aria-current="true">
+                <div class="d-flex w-100 justify-content-between">
+                <h5 class="mb-1">Report Title</h5>
+                <button type="button" class="btn btn-danger btn-sm">Delete</button>
+                </div>
+                <p class="mb-1">user Comment</p>
+                <p class="mb-1">n. of people</p>
+                <small>coordinates</small>
+            </a>
+
+            <a href="#" class="list-group-item list-group-item-action">
+                <div class="d-flex w-100 justify-content-between">
+                <h5 class="mb-1">Report Title</h5>
+                <button type="button" class="btn btn-danger btn-sm">Delete</button>
+                </div>
+                <p class="mb-1">user Comment</p>
+                <p class="mb-1">n. of people</p>
+                <small class="text-muted">coordinates</small>
+            </a>
+
+            <a href="#" class="list-group-item list-group-item-action">
+                <div class="d-flex w-100 justify-content-between">
+                <h5 class="mb-1">Report Title</h5>
+                <button type="button" class="btn btn-danger btn-sm">Delete</button>
+                </div>
+                <p class="mb-1">user Comment</p>
+                <p class="mb-1">n. of people</p>
+                <small class="text-muted">coordinates</small>
+            </a>
+            </div>
     </body>
 </head>
 </html>

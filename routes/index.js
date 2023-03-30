@@ -104,8 +104,8 @@ router.post('/sign-in', isSignedIn, (req, res) => {
                   console.log("is staff")
                 }
               }
+              res.redirect('/')
             }
-            res.redirect('/')
           }).catch(compareErr => console.log(compareErr));
         })
     })

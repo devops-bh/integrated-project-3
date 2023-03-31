@@ -47,7 +47,7 @@ router.get("/events", (req, res) => {
   markerEmitter.on("marker", (marker) => { // [refactor] there may be a better way of getting the markers 
     res.write(`data: ${JSON.stringify({marker})}`);
     res.write("\n\n");
-    console.log("user tried to add a marker ", markers)
+    console.log("user tried to add a marker ", marker)
     res.end();
   })
 })

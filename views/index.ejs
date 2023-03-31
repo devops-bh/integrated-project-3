@@ -118,21 +118,17 @@
             let _marker = new mapboxgl.Marker({ scale: 2, color: "orange" }).setLngLat(new mapboxgl.LngLat(lng, lat))
             if (is_staff && signed_in) {
               _marker.setPopup(new mapboxgl.Popup().setHTML(
-                '<form>' +
                 '<div class="text-center">' +
-                '<button type="submit" class="btn btn-success" button style="background-color:blue">Join Event</button>' +
+                '<button type="submit" class="btn btn-success" button style="background-color:blue" onclick="joinEvent()">Join Event</button>' +
                 '<button type="cancel" class="btn btn-danger">Remove</button>' +
                 '<button type="submit" id="add-marker" class="btn btn-success" >Clean</button>' +
-                '</div>' +
-                '</form>'
+                '</div>' 
               ))
             } else if (signed_in) {
               _marker.setPopup(new mapboxgl.Popup().setHTML(
-                '<form>' +
                 '<div class="text-center">' +
                 '<button type="submit" onclick="joinEvent()" class="btn btn-success" button style="background-color:blue">Join Event</button>' +
-                '</div>' +
-                '</form>'
+                '</div>' 
               ))
             } else {
               _marker.setPopup(new mapboxgl.Popup().setHTML(

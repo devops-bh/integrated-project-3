@@ -78,13 +78,14 @@
 
         // [refactor] this was the quickest/easiest way to implement getting the marker's details and sending them to the server, there may be alternative (better) approaches  
           let state = { newMarkerToAdd: null }
+          const signed_in = <%= signed_in %>;  
 
           // be careful, as one of these are obtained from the server; potential [refactor]
-        let is_staff = false; 
-        <% if (is_staff) { %>
-          is_staff = true
-        <% } %>
-        console.log("This user is staff? ", is_staff)
+            let is_staff = false; 
+            <% if (is_staff) { %>
+                is_staff = true
+            <% } %>
+            console.log("This user is staff? ", is_staff)
 
         const map = new mapboxgl.Map({
             container: 'map', // container ID
@@ -121,17 +122,26 @@
               markers.map(marker => {
                 let lng = marker.lng 
                 let lat = marker.lat
-                let _marker = new mapboxgl.Marker({ scale: 2, color: "orange" }).setLngLat(new mapboxgl.LngLat(lng, lat)).setPopup(new mapboxgl.Popup().setHTML(
-                              '<form>'+
-                              '<div class="text-center">'+
-                                '<button type="submit" class="btn btn-success" button style="background-color:blue">Join Event</button>'+
-                                '<button type="cancel" class="btn btn-danger">Remove</button>'+
-                                '<button type="submit" id="add-marker" class="btn btn-success" >Clean</button>'+
-                                '</div>'+
-                                
-                                '</form>'
-                                )
-                                )
+                let _marker = new mapboxgl.Marker({ scale: 2, color: "orange" }).setLngLat(new mapboxgl.LngLat(lng, lat))
+                if (is_staff && signed_in) {
+                    _marker.setPopup(new mapboxgl.Popup().setHTML(
+                      '<form>'+
+                      '<div class="text-center">'+
+                        '<button type="submit" class="btn btn-success" button style="background-color:blue">Join Event</button>'+
+                        '<button type="cancel" class="btn btn-danger">Remove</button>'+
+                        '<button type="submit" id="add-marker" class="btn btn-success" >Clean</button>'+
+                        '</div>'+
+                        '</form>'
+                    ))
+                  } else if (signed_in) {
+                    _marker.setPopup(new mapboxgl.Popup().setHTML(
+                      '<form>' +
+                      '<div class="text-center">' +
+                      '<button type="submit" onclick="joinEvent()" class="btn btn-success" button style="background-color:blue">Join Event</button>' +
+                      '</div>' +
+                      '</form>'
+                    ))
+                  }
                 _marker.addTo(map)
               })
             });
@@ -144,6 +154,7 @@
             const { lat, lng } = parsedData.marker
             let lngLat = { lng: lng, lat: lat }
             console.log("New marker added: ", lngLat)
+            // [todo] similar/same logic as in the fetching markers code  
             let _marker = new mapboxgl.Marker({ scale: 2, color: "orange" }).setLngLat(lngLat).setPopup(new mapboxgl.Popup().setHTML(
                               '<form>'+
                               '<div class="text-center">'+
@@ -164,7 +175,6 @@
           if (e.originalEvent.target.parentNode.parentNode.classList.contains("mapboxgl-marker")) {
             return; 
           } 
-          const signed_in = <%= signed_in %>;  
           if (!signed_in) {
             alert("Please sign in");
             return;
@@ -235,7 +245,7 @@
         
         let userId = -1; 
         <% if (user_id && user_id != -1) { %>
-          userId = user_id
+          userId = "<%= user_id %>";
         <% } %>
         function addMarker() { // [refactor] there may be a proper way of attaching event listeners to the popup but this was the quickest/easiest way 
           // [todo] use a similar (or better) approach to get the event details e.g. name of event 
@@ -259,6 +269,13 @@
                //remove all unsubmitted markers
                markers.forEach((marker) => marker.remove());  
            }
+
+          function joinEvent() {
+            // [todo] implement communication with server etc 
+            if (!signed_in) {
+              alert("Please sign into join events")
+            }
+          }
 
     </script>
   </body>

@@ -77,7 +77,7 @@
         mapboxgl.accessToken = 'pk.eyJ1IjoiYmgzMDAiLCJhIjoiY2xlaWpsZW91MDI0dDQxbnI4aWNueTVneiJ9.u0cO3o-dzacQpUpt2rxLtA';
 
         // [refactor] this was the quickest/easiest way to implement getting the marker's details and sending them to the server, there may be alternative (better) approaches  
-          let state = { newMarkerToAdd: null }
+          let state = { newMarkerToAdd: null, eventIdToJoin: null }
           const signed_in = <%= signed_in %>;  
 
           // be careful, as one of these are obtained from the server; potential [refactor]
@@ -126,13 +126,12 @@
                 `
               ))
             } else if (signed_in) {
+              // I think we should just use the marker's default event listener which is triggered on map.on 
               _marker.getElement().dataset.markerId = marker.markerId
-              // [refactor] really we should just do this logic in the map.on("click") event; since markers already have event listers
-              _marker.getElement().addEventListener("click", (e) => joinEvent(e.target.parentNode.parentNode.dataset.markerId))
               console.log(_marker.getElement())
               _marker.setPopup(new mapboxgl.Popup().setHTML(
                 `<div class="text-center" id="marker-popup-${marker.markerId}" dataset-markerId="${marker.markerId}"> 
-                <button id="marker-button-${marker.markerId}" type="submit" dataset-userId="${marker.userId}" dataset-markerId="${marker.markerId}" class="btn btn-success" button style="background-color:blue">Join Event</button> 
+                <button id="marker-button-${marker.markerId}" type="submit" onclick="joinEvent()" dataset-userId="${marker.userId}" dataset-markerId="${marker.markerId}" class="btn btn-success" button style="background-color:blue">Join Event</button> 
                 </div>`
               ))
             } else {
@@ -172,9 +171,12 @@
               alert("Please sign in");
               return; 
             } 
+
             if (signed_in && e.originalEvent.target.parentNode.parentNode.classList.contains("mapboxgl-marker")) {
+              if (e.originalEvent.target.parentNode.parentNode.dataset.markerId == undefined) return;
+              state.eventIdToJoin = e.originalEvent.target.parentNode.parentNode.dataset.markerId
               return; 
-            }
+            } 
 
           const coordinates = e.lngLat;
               // [refactor] there's likely a better way to organize this but this will do for now 
@@ -269,12 +271,29 @@
            }
 
 
-          function joinEvent(markerId) {
+          function joinEvent() {
             // [todo] implement communication with server etc 
             if (!signed_in) {
               alert("Please sign into join events")
             }
+            const markerId = state.eventIdToJoin 
             console.log("MARKER ID: " + markerId)
+            fetch("users/volunteer", {
+              method: "POST", // or 'PUT'
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                user_id: userId, marker_id: markerId
+              }),
+            })
+              .then((response) => response.json()).then((data) => {
+                console.log("Success:", data);
+                alert("You are now a participant of " + markerId)
+              })
+              .catch((error) => {
+                console.error("Error:", error);
+              });            
           }
 
     </script>

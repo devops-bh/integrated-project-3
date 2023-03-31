@@ -58,4 +58,25 @@ router.get("/disconnect-map", (req, res) => {
 
 })
 
+router.post("/volunteer", isSignedIn, (req, res) => {
+  console.log("We got a new volunteer")
+  fs.readFile(path.join(__dirname, "./database.json"), 'utf8', (err, data) => {
+    if (err) console.log(err)
+    const parsedData = JSON.parse(data)
+    const newVolunteer = { user_id: req.body.user_id, marker_id: req.body.marker_id, volunteer_id: uuid() }
+    parsedData.volunteers.push(newVolunteer) 
+    const newData = parsedData
+    fs.writeFile(path.join(__dirname, "./database.json"), JSON.stringify(newData), err => {
+      if (err) {
+        console.error(err);
+        // [todo] res.render or redirect with "something went wrong" message 
+        res.send(err)
+      } else {
+            console.log(req.body.marker_id, req.body.user_id )
+            res.send({msg: "success"})
+          }
+        });
+      })
+})
+
 module.exports = router;

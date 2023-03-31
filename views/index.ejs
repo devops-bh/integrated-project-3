@@ -118,17 +118,22 @@
             let _marker = new mapboxgl.Marker({ scale: 2, color: "orange" }).setLngLat(new mapboxgl.LngLat(lng, lat))
             if (is_staff && signed_in) {
               _marker.setPopup(new mapboxgl.Popup().setHTML(
-                '<div class="text-center">' +
-                '<button type="submit" class="btn btn-success" button style="background-color:blue" onclick="joinEvent()">Join Event</button>' +
-                '<button type="cancel" class="btn btn-danger">Remove</button>' +
-                '<button type="submit" id="add-marker" class="btn btn-success" >Clean</button>' +
-                '</div>' 
+              `<div class="text-center" id="marker-${marker.markerId}">
+                  <button type="submit" class="btn btn-success" button style="background-color:blue" onclick="joinEvent()">Join Event</button>
+                  <button type="cancel" class="btn btn-danger">Remove</button>
+                  <button type="submit" id="add-marker" class="btn btn-success" >Clean</button>
+                </div>
+                `
               ))
             } else if (signed_in) {
+              _marker.getElement().dataset.markerId = marker.markerId
+              // [refactor] really we should just do this logic in the map.on("click") event; since markers already have event listers
+              _marker.getElement().addEventListener("click", (e) => joinEvent(e.target.parentNode.parentNode.dataset.markerId))
+              console.log(_marker.getElement())
               _marker.setPopup(new mapboxgl.Popup().setHTML(
-                '<div class="text-center">' +
-                '<button type="submit" onclick="joinEvent()" class="btn btn-success" button style="background-color:blue">Join Event</button>' +
-                '</div>' 
+                `<div class="text-center" id="marker-popup-${marker.markerId}" dataset-markerId="${marker.markerId}"> 
+                <button id="marker-button-${marker.markerId}" type="submit" dataset-userId="${marker.userId}" dataset-markerId="${marker.markerId}" class="btn btn-success" button style="background-color:blue">Join Event</button> 
+                </div>`
               ))
             } else {
               _marker.setPopup(new mapboxgl.Popup().setHTML(
@@ -228,6 +233,8 @@
                 _marker.addTo(map);
         });
         
+
+
         function removeMarker()
         {
           // remove all markers added by user 
@@ -261,11 +268,13 @@
                markers.forEach((marker) => marker.remove());  
            }
 
-          function joinEvent() {
+
+          function joinEvent(markerId) {
             // [todo] implement communication with server etc 
             if (!signed_in) {
               alert("Please sign into join events")
             }
+            console.log("MARKER ID: " + markerId)
           }
 
     </script>

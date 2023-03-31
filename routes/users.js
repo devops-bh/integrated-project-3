@@ -3,6 +3,7 @@ const path = require("path")
 var express = require('express');
 var router = express.Router();
 const isSignedIn = require("./middleware").isSignedIn
+const uuid = require("uuid").v4
 const EventEmitter = require("events")
 class MarkerEmitter extends EventEmitter {} 
 const markerEmitter = new MarkerEmitter() 
@@ -17,7 +18,7 @@ let markers = []; // [refactor] perhaps call these litter_event or litter_locati
 // maybe rename this route to something better e.g. add-litter-location 
 router.post('/add-marker', isSignedIn, async (req, res) => {
   const { userId, lat, lng } = req.body
-  const newMarker = {userId, lat: req.body.lat, lng: req.body.lng}  
+  const newMarker = {userId, lat: req.body.lat, lng: req.body.lng, markerId: uuid()}  
     fs.readFile(path.join(__dirname, "./database.json"), 'utf8', (err, data) => {
         if (err) console.log(err)
         const parsedData = JSON.parse(data)

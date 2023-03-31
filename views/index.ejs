@@ -171,15 +171,13 @@
           };
           //click on the map, then click on the "Add new Marker" to add new marker       
           map.on('click', e => {
-          // [refactor] (quick fix) I think we should be using layers (a special MapboxGL concept)  
-          if (e.originalEvent.target.parentNode.parentNode.classList.contains("mapboxgl-marker")) {
-            return; 
-          } 
-          if (!signed_in) {
-            alert("Please sign in");
-            return;
-          }
-            const coordinates = e.lngLat;
+            // [refactor] (quick fix) I think we should be using layers (a special MapboxGL concept)  
+            if (e.originalEvent.target.parentNode.parentNode.classList.contains("mapboxgl-marker") || !signed_in) {
+              alert("Please sign in");
+              return; 
+            } 
+
+          const coordinates = e.lngLat;
               // [refactor] there's likely a better way to organize this but this will do for now 
             let _marker = new mapboxgl.Marker({ scale: 2}).setLngLat(coordinates)
             state.newMarkerToAdd = { lng: coordinates.lng, lat: coordinates.lat }

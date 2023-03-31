@@ -159,8 +159,8 @@
           };
           //click on the map, then click on the "Add new Marker" to add new marker       
           map.on('click', e => {
-            // [refactor] (quick fix) I think we should be using layers (a special MapboxGL concept)  
-            if (e.originalEvent.target.parentNode.parentNode.classList.contains("mapboxgl-marker") || !signed_in) {
+            // is this user-experience suitable? Maybe displaying the marker's popup content is more encouraging to get the user to participate?
+            if (e.originalEvent.target.parentNode.parentNode.classList.contains("mapboxgl-marker") && !signed_in) {
               alert("Please sign in");
               return; 
             } 

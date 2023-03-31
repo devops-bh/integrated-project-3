@@ -61,11 +61,6 @@ router.get('/reportlittermenuhomepage', (req, res) => {
   res.render('reportlittermenuhomepage', { title: 'reportlittermenuhomepage', signed_in: true })
 }) 
 
-// for pin to report page
-router.get('/reportList', (req, res) => {
-  res.render('reportList', { title: 'reportList', signed_in: true })
-}) 
-
 // for blog page 
 router.get('/Blog', (req, res) => {
   res.render('Blog', { title: 'Blog', signed_in: true })

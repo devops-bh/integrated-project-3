@@ -112,6 +112,32 @@
           let othersMarkers = []
           let markers = []
 
+          function addMarkerToMapWithAppropriatePopup(marker) {
+            let lng = marker.lng
+            let lat = marker.lat
+            let _marker = new mapboxgl.Marker({ scale: 2, color: "orange" }).setLngLat(new mapboxgl.LngLat(lng, lat))
+            if (is_staff && signed_in) {
+              _marker.setPopup(new mapboxgl.Popup().setHTML(
+                '<form>' +
+                '<div class="text-center">' +
+                '<button type="submit" class="btn btn-success" button style="background-color:blue">Join Event</button>' +
+                '<button type="cancel" class="btn btn-danger">Remove</button>' +
+                '<button type="submit" id="add-marker" class="btn btn-success" >Clean</button>' +
+                '</div>' +
+                '</form>'
+              ))
+            } else if (signed_in) {
+              _marker.setPopup(new mapboxgl.Popup().setHTML(
+                '<form>' +
+                '<div class="text-center">' +
+                '<button type="submit" onclick="joinEvent()" class="btn btn-success" button style="background-color:blue">Join Event</button>' +
+                '</div>' +
+                '</form>'
+              ))
+            }
+            _marker.addTo(map)
+          }
+
           // [todo] fetch the markers which were added whilst the user was not looking at the map (e.g. on another page) 
           fetch("/markers") // make a request to the server 
             .then((response) => response.json())
@@ -120,54 +146,16 @@
               // we got the markers, now time to display 
               let markers = data
               markers.map(marker => {
-                let lng = marker.lng 
-                let lat = marker.lat
-                let _marker = new mapboxgl.Marker({ scale: 2, color: "orange" }).setLngLat(new mapboxgl.LngLat(lng, lat))
-                if (is_staff && signed_in) {
-                    _marker.setPopup(new mapboxgl.Popup().setHTML(
-                      '<form>'+
-                      '<div class="text-center">'+
-                        '<button type="submit" class="btn btn-success" button style="background-color:blue">Join Event</button>'+
-                        '<button type="cancel" class="btn btn-danger">Remove</button>'+
-                        '<button type="submit" id="add-marker" class="btn btn-success" >Clean</button>'+
-                        '</div>'+
-                        '</form>'
-                    ))
-                  } else if (signed_in) {
-                    _marker.setPopup(new mapboxgl.Popup().setHTML(
-                      '<form>' +
-                      '<div class="text-center">' +
-                      '<button type="submit" onclick="joinEvent()" class="btn btn-success" button style="background-color:blue">Join Event</button>' +
-                      '</div>' +
-                      '</form>'
-                    ))
-                  }
-                _marker.addTo(map)
-              })
-            });
+                addMarkerToMapWithAppropriatePopup(marker)
+              });
+            })
             
           // [todo] I don't think this will get pre-existing markers so this will be for markers added when the user is looking at the map 
           let eventSource = new EventSource("/users/events/");
 
           eventSource.onmessage = event => { // [todo] distinguish the users' already added markers from other users' markers 
-            const parsedData = JSON.parse(event.data)
-            const { lat, lng } = parsedData.marker
-            let lngLat = { lng: lng, lat: lat }
-            console.log("New marker added: ", lngLat)
-            // [todo] similar/same logic as in the fetching markers code  
-            let _marker = new mapboxgl.Marker({ scale: 2, color: "orange" }).setLngLat(lngLat).setPopup(new mapboxgl.Popup().setHTML(
-                              '<form>'+
-                              '<div class="text-center">'+
-                                '<button type="submit" class="btn btn-success" button style="background-color:blue">Join Event</button>'+
-                                '<button type="cancel" class="btn btn-danger">Remove</button>'+
-                                '<button type="submit" id="add-marker" class="btn btn-success" >Clean</button>'+
-                                '</div>'+
-                                
-                                '</form>'
-                                )
-                                )
-            // [todo] set the popup here to allow a user to edit their marked litter event? 
-            _marker.addTo(map)
+            const marker = JSON.parse(event.data).marker
+            addMarkerToMapWithAppropriatePopup(marker)
           };
           //click on the map, then click on the "Add new Marker" to add new marker       
           map.on('click', e => {

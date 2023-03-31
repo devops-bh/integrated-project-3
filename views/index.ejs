@@ -134,6 +134,13 @@
                 '</div>' +
                 '</form>'
               ))
+            } else {
+              _marker.setPopup(new mapboxgl.Popup().setHTML(
+                // [refactor] maybe rename "marker" distinguish the marker data from the marker itself better 
+                `<div>${marker.userId}: Marker cotent
+                    <br /><a href="/sign-in">Please sign in to participate</a>
+                  </div>`
+              ))
             }
             _marker.addTo(map)
           }
@@ -160,67 +167,69 @@
           //click on the map, then click on the "Add new Marker" to add new marker       
           map.on('click', e => {
             // is this user-experience suitable? Maybe displaying the marker's popup content is more encouraging to get the user to participate?
-            if (e.originalEvent.target.parentNode.parentNode.classList.contains("mapboxgl-marker") && !signed_in) {
+            if (!e.originalEvent.target.parentNode.parentNode.classList.contains("mapboxgl-marker") && !signed_in) {
               alert("Please sign in");
               return; 
             } 
+            if (signed_in && e.originalEvent.target.parentNode.parentNode.classList.contains("mapboxgl-marker")) {
+              return; 
+            }
 
           const coordinates = e.lngLat;
               // [refactor] there's likely a better way to organize this but this will do for now 
-            let _marker = new mapboxgl.Marker({ scale: 2}).setLngLat(coordinates)
-            state.newMarkerToAdd = { lng: coordinates.lng, lat: coordinates.lat }
-            markers.push(new mapboxgl.Marker({scale: 2 /* was hoping this reduced the "accidental marker add on marker click" */})
-            // how secure is setHTML? 
-                .setLngLat(coordinates).setPopup(new mapboxgl.Popup().setHTML(
-                         '<div class="mb-3 mt-3">'+
-                            '<label for="firstname" class="form-label">Title:</label>'+
-                            '<input type="text" class="form-control" id="title" placeholder="Enter Title" name="title" required>'+
-                          '</div>'+
+              state.newMarkerToAdd = { lng: coordinates.lng, lat: coordinates.lat }
+              let _marker = new mapboxgl.Marker({scale: 2}).setLngLat(coordinates)
+            if (signed_in) {
+                _marker.setLngLat(coordinates).setPopup(new mapboxgl.Popup().setHTML(
+                        '<div class="mb-3 mt-3">'+
+                          '<label for="firstname" class="form-label">Title:</label>'+
+                          '<input type="text" class="form-control" id="title" placeholder="Enter Title" name="title" required>'+
+                        '</div>'+
 
-                          '<div class="mb-3 mt-3">'+
-                          '<label for="firstname" class="form-label">Comment:</label>'+
-                          '<input class="form-control" id="comment" placeholder="Enter Comment" name="text" required>'+
-                          '</div>'+
+                        '<div class="mb-3 mt-3">'+
+                        '<label for="firstname" class="form-label">Comment:</label>'+
+                        '<input class="form-control" id="comment" placeholder="Enter Comment" name="text" required>'+
+                        '</div>'+
 
-                          '<div class="mb-3 mt-3">' +
-                          '<label for="firstname" class="form-label">Number of people needed:</label>' +
-                          '<input type="number" class="form-control" id="peopleN" placeholder="Enter Number" name="peopleN" required>'+
-                          '</div>'+
-                          '<div class="mb-3 mt-3">'+
-                          '<div class="mb-3">'+
-                            '<label for="uploadImage" class="form-label">Add image:</label>'+
-                            '<label for="formFileSm" class="form-label"></label>'+
-                            '<input class="form-control" id="formFileMd" type="file">'+                                           
-                          '</div>'+
+                        '<div class="mb-3 mt-3">' +
+                        '<label for="firstname" class="form-label">Number of people needed:</label>' +
+                        '<input type="number" class="form-control" id="peopleN" placeholder="Enter Number" name="peopleN" required>'+
+                        '</div>'+
+                        '<div class="mb-3 mt-3">'+
+                        '<div class="mb-3">'+
+                          '<label for="uploadImage" class="form-label">Add image:</label>'+
+                          '<label for="formFileSm" class="form-label"></label>'+
+                          '<input class="form-control" id="formFileMd" type="file">'+                                           
+                        '</div>'+
 
-                          '<div class="mb-3 mt-3">'+
-                          '<label for="firstname" class="form-label">Amount Of Garbage:</label>'+
-                          '<br>'+
+                        '<div class="mb-3 mt-3">'+
+                        '<label for="firstname" class="form-label">Amount Of Garbage:</label>'+
+                        '<br>'+
+                        '<div class="form-check form-check-inline">'+
+                          '<input  class="form-check-input" type="radio" id="inlineCheckbox1" name="optradio" value="option1">'+
+                          '<label class="form-check-label" for="inlineCheckbox1">Small</label>'+
+                        '</div>'+
+                        '<div class="form-check form-check-inline">'+
+                          '<input  class="form-check-input" type="radio" id="inlineCheckbox2" name="optradio" value="option2">'+
+                          '<label class="form-check-label" for="inlineCheckbox2">Medium</label>'+
+                          '</div>'+
                           '<div class="form-check form-check-inline">'+
-                            '<input  class="form-check-input" type="radio" id="inlineCheckbox1" name="optradio" value="option1">'+
-                            '<label class="form-check-label" for="inlineCheckbox1">Small</label>'+
-                          '</div>'+
-                          '<div class="form-check form-check-inline">'+
-                            '<input  class="form-check-input" type="radio" id="inlineCheckbox2" name="optradio" value="option2">'+
-                            '<label class="form-check-label" for="inlineCheckbox2">Medium</label>'+
+                            '<input class="form-check-input" type="radio" id="inlineCheckbox3" name="optradio" value="option3">'+
+                            '<label class="form-check-label" for="inlineCheckbox3">Large</label>'+
                             '</div>'+
-                            '<div class="form-check form-check-inline">'+
-                              '<input class="form-check-input" type="radio" id="inlineCheckbox3" name="optradio" value="option3">'+
-                              '<label class="form-check-label" for="inlineCheckbox3">Large</label>'+
-                              '</div>'+
+                            '</div>'+
+                            
+                            
+                            '<div class="text-center">'+
+                              '<button type="cancel" class="btn btn-danger" onclick="removeMarker()">Cancel</button>'+
+                              '<button type="submit" id="add-marker" onClick="addMarker()" class="btn btn-success" >Submit</button>'+
                               '</div>'+
                               
-                              
-                              '<div class="text-center">'+
-                                '<button type="cancel" class="btn btn-danger" onclick="removeMarker()">Cancel</button>'+
-                                '<button type="submit" id="add-marker" onClick="addMarker()" class="btn btn-success" >Submit</button>'+
-                                '</div>'+
-                                
-                                '</form>'+
-                                '</div>'
-                                )
-                                )
-                .addTo(map));
+                              '</form>'+
+                              '</div>'
+                      ))
+                }
+                _marker.addTo(map);
         });
         
         function removeMarker()

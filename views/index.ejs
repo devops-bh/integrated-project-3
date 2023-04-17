@@ -19,6 +19,7 @@
         body {
             margin: 0;
             padding: 0;
+            overflow-y:hidden; 
           }
           
         #map {
@@ -66,15 +67,26 @@
              
               }
 
-              .marker-list-container {
-                position: absolute;
-                top: 10vh;
+              #marker-list-filter-input {
+                position: fixed;
+                top: 11vh;
                 left: 3.5vw;
                 z-index: 100;
-                width: 15vw;
+                width: 16vw;
+              }
+              .marker-list-container {
+                position: absolute;
+                top: 14vh;
+                left: 3.5vw;
+                z-index: 100;
+                width: 16vw;
                 border: 2px solid black; 
                 background-color: #ececec;
+                max-height: 12vh; 
+                overflow-y: scroll;
+                overflow-x: hidden;
               }
+
 
             .is-hidden {
               display: none !important;
@@ -84,8 +96,8 @@
 </head>
 <body>
   <%- include('./partials/navbar.ejs', {signed_in: signed_in}) %>
+  <input type="text" id="marker-list-filter-input" placeholder="Search for names..">
     <div class="marker-list-container">
-      <input type="text" id="marker-list-filter-input" placeholder="Search for names..">
       <div class="marker-list-widget" id="markers"></div>
     </div>
     <div id="map"></div>

@@ -66,14 +66,25 @@
              
               }
 
+              .marker-list-widget {
+                position: absolute;
+                top: 10vh;
+                left: 3.5vw;
+                z-index: 100;
+                width: 20vw;
+                border: 2px solid black; 
+                background-color: #ececec;
+              }
+
       </style>
 
 </head>
 <body>
   <%- include('./partials/navbar.ejs', {signed_in: signed_in}) %>
+    <div class="marker-list-widget" id="markers"></div>
     <div id="map"></div>
     <script>
-      
+      const markerListWidget = document.querySelector("#markers")
         mapboxgl.accessToken = 'pk.eyJ1IjoiYmgzMDAiLCJhIjoiY2xlaWpsZW91MDI0dDQxbnI4aWNueTVneiJ9.u0cO3o-dzacQpUpt2rxLtA';
 
         // [refactor] this was the quickest/easiest way to implement getting the marker's details and sending them to the server, there may be alternative (better) approaches  
@@ -152,9 +163,21 @@
               console.log(data)
               // we got the markers, now time to display 
               let markers = data
-              markers.map(marker => {
+              markers.map((marker,i) => {
+                console.log(i)
                 addMarkerToMapWithAppropriatePopup(marker)
+                markerListWidget.innerHTML += `<a data-lat="${marker.lat}" data-lng="${marker.lng}" class="listed-marker" href="${marker.marker_id}">Location-${i}</a><br />`
               });
+              document.querySelectorAll(".listed-marker").forEach(el => {
+                el.addEventListener("click", e => {
+                  e.preventDefault()
+                  map.flyTo({
+                    center: [Number(e.target.dataset.lng), Number(e.target.dataset.lat)],
+                    essential: true, 
+                    duration: 3000
+                  });
+                }) 
+              })
             })
             
           // [todo] I don't think this will get pre-existing markers so this will be for markers added when the user is looking at the map 

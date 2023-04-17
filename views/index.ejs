@@ -66,22 +66,28 @@
              
               }
 
-              .marker-list-widget {
+              .marker-list-container {
                 position: absolute;
                 top: 10vh;
                 left: 3.5vw;
                 z-index: 100;
-                width: 20vw;
+                width: 15vw;
                 border: 2px solid black; 
                 background-color: #ececec;
               }
 
+            .is-hidden {
+              display: none !important;
+            }
       </style>
 
 </head>
 <body>
   <%- include('./partials/navbar.ejs', {signed_in: signed_in}) %>
-    <div class="marker-list-widget" id="markers"></div>
+    <div class="marker-list-container">
+      <input type="text" id="marker-list-filter-input" placeholder="Search for names..">
+      <div class="marker-list-widget" id="markers"></div>
+    </div>
     <div id="map"></div>
     <script>
       const markerListWidget = document.querySelector("#markers")
@@ -166,9 +172,10 @@
               markers.map((marker,i) => {
                 console.log(i)
                 addMarkerToMapWithAppropriatePopup(marker)
-                markerListWidget.innerHTML += `<a data-lat="${marker.lat}" data-lng="${marker.lng}" class="listed-marker" href="${marker.marker_id}">Location-${i}</a><br />`
+                markerListWidget.innerHTML += `<a style="display:block;" data-lat="${marker.lat}" data-lng="${marker.lng}" class="listed-marker" href="${marker.marker_id}">Location-${i}</a>`
               });
-              document.querySelectorAll(".listed-marker").forEach(el => {
+              const listedMarkersEl = document.querySelectorAll(".listed-marker")
+              listedMarkersEl.forEach(el => {
                 el.addEventListener("click", e => {
                   e.preventDefault()
                   map.flyTo({
@@ -178,7 +185,18 @@
                   });
                 }) 
               })
+              document.querySelector("#marker-list-filter-input").addEventListener("keyup", e => {
+                const inputtedValue = e.target.value.toLowerCase()
+                console.log(inputtedValue)
+                  listedMarkersEl.forEach(el => {
+                    if (el.textContent.toLowerCase().includes(inputtedValue)) {
+                      el.classList.remove("is-hidden");
+                    } else {
+                      el.classList.add("is-hidden");
+                    }
+                })
             })
+        })
             
           // [todo] I don't think this will get pre-existing markers so this will be for markers added when the user is looking at the map 
           let eventSource = new EventSource("/users/events/");

@@ -79,7 +79,7 @@
                 top: 14vh;
                 left: 3.5vw;
                 z-index: 100;
-                width: 16vw;
+                width: 20vw;
                 border: 2px solid black; 
                 background-color: #ececec;
                 max-height: 12vh; 
@@ -106,7 +106,7 @@
         mapboxgl.accessToken = 'pk.eyJ1IjoiYmgzMDAiLCJhIjoiY2xlaWpsZW91MDI0dDQxbnI4aWNueTVneiJ9.u0cO3o-dzacQpUpt2rxLtA';
 
         // [refactor] this was the quickest/easiest way to implement getting the marker's details and sending them to the server, there may be alternative (better) approaches  
-          let state = { newMarkerToAdd: null, eventIdToJoin: null }
+          let state = { newMarkerToAdd: null, eventIdToJoin: null, markersListed: 0 }
           const signed_in = <%= signed_in %>;  
 
           // be careful, as one of these are obtained from the server; potential [refactor]
@@ -157,7 +157,6 @@
             } else if (signed_in) {
               // I think we should just use the marker's default event listener which is triggered on map.on 
               _marker.getElement().dataset.markerId = marker.markerId
-              console.log(_marker.getElement())
               _marker.setPopup(new mapboxgl.Popup().setHTML(
                 `<div class="text-center" id="marker-popup-${marker.markerId}" dataset-markerId="${marker.markerId}"> 
                 <button id="marker-button-${marker.markerId}" type="submit" onclick="joinEvent()" dataset-userId="${marker.userId}" dataset-markerId="${marker.markerId}" class="btn btn-success" button style="background-color:blue">Join Event</button> 
@@ -172,6 +171,23 @@
               ))
             }
             _marker.addTo(map)
+            //markerListWidget.innerHTML += `<a style="display:block;" data-lat="${marker.lat}" data-lng="${marker.lng}" id="${marker.markerId}" class="listed-marker" href="#${marker.markerId}">Location-${state.markersListed}</a>`
+            const markerListItem = document.createElement("div");
+            const textNode = document.createTextNode(`Location-${marker.markerId}`);
+            markerListItem.appendChild(textNode)
+            markerListItem.setAttribute('data-lat', marker.lat)
+            markerListItem.setAttribute('data-lng', marker.lng)
+            markerListItem.setAttribute('data-id', marker.markerId)
+            markerListItem.addEventListener("click", e => {
+              e.preventDefault()
+              console.log(e.target.dataset.id, marker.markerId)
+              map.flyTo({
+                center: [Number(e.target.dataset.lng), Number(e.target.dataset.lat)],
+                essential: true,
+                duration: 3000
+              });
+            })
+            document.querySelector(".marker-list-widget").appendChild(markerListItem);
           }
 
           // [todo] fetch the markers which were added whilst the user was not looking at the map (e.g. on another page) 
@@ -184,19 +200,8 @@
               markers.map((marker,i) => {
                 console.log(i)
                 addMarkerToMapWithAppropriatePopup(marker)
-                markerListWidget.innerHTML += `<a style="display:block;" data-lat="${marker.lat}" data-lng="${marker.lng}" class="listed-marker" href="${marker.marker_id}">Location-${i}</a>`
+                //markerListWidget.innerHTML += `<a style="display:block;" data-lat="${marker.lat}" data-lng="${marker.lng}" class="listed-marker" href="${marker.marker_id}">Location-${i}</a>`
               });
-              const listedMarkersEl = document.querySelectorAll(".listed-marker")
-              listedMarkersEl.forEach(el => {
-                el.addEventListener("click", e => {
-                  e.preventDefault()
-                  map.flyTo({
-                    center: [Number(e.target.dataset.lng), Number(e.target.dataset.lat)],
-                    essential: true, 
-                    duration: 3000
-                  });
-                }) 
-              })
               document.querySelector("#marker-list-filter-input").addEventListener("keyup", e => {
                 const inputtedValue = e.target.value.toLowerCase()
                 console.log(inputtedValue)
@@ -208,6 +213,7 @@
                     }
                 })
             })
+            //state.markersListed = listedMarkersEl.length
         })
             
           // [todo] I don't think this will get pre-existing markers so this will be for markers added when the user is looking at the map 
@@ -217,6 +223,21 @@
             const marker = JSON.parse(event.data).marker
             addMarkerToMapWithAppropriatePopup(marker)
           };
+
+          /* 
+          document.querySelectorAll(".listed-marker").forEach(el => {
+            console.log("ID: ", e.target.dataset.id, e.target.dataset.lng, e.target.dataset.lat)
+              el.addEventListener("click", e => {
+                e.preventDefault()
+                map.flyTo({
+                  center: [Number(e.target.dataset.lng), Number(e.target.dataset.lat)],
+                  essential: true,
+                  duration: 3000
+                });
+              })
+            })
+            */ 
+
           //click on the map, then click on the "Add new Marker" to add new marker       
           map.on('click', e => {
             // is this user-experience suitable? Maybe displaying the marker's popup content is more encouraging to get the user to participate?

@@ -147,7 +147,7 @@
             let _marker = new mapboxgl.Marker({ scale: 2, color: "orange" }).setLngLat(new mapboxgl.LngLat(lng, lat))
             if (is_staff && signed_in) {
               _marker.setPopup(new mapboxgl.Popup().setHTML(
-              `<div class="text-center" id="marker-${marker.markerId}">
+              `<div class="text-center" id="marker-${marker.marker_id}">
                   <button type="submit" class="btn btn-success" button style="background-color:blue" onclick="joinEvent()">Join Event</button>
                   <button type="cancel" class="btn btn-danger">Remove</button>
                   <button type="submit" id="add-marker" class="btn btn-success" >Clean</button>
@@ -173,14 +173,14 @@
             _marker.addTo(map)
             //markerListWidget.innerHTML += `<a style="display:block;" data-lat="${marker.lat}" data-lng="${marker.lng}" id="${marker.markerId}" class="listed-marker" href="#${marker.markerId}">Location-${state.markersListed}</a>`
             const markerListItem = document.createElement("div");
-            const textNode = document.createTextNode(`Location-${marker.markerId}`);
+            const textNode = document.createTextNode(`Location-${marker.marker_id}`);
             markerListItem.appendChild(textNode)
             markerListItem.setAttribute('data-lat', marker.lat)
             markerListItem.setAttribute('data-lng', marker.lng)
             markerListItem.setAttribute('data-id', marker.markerId)
             markerListItem.addEventListener("click", e => {
               e.preventDefault()
-              console.log(e.target.dataset.id, marker.markerId)
+              console.log(e.target.dataset.id, marker.markerId) // will  likely yield ?, undefined 
               map.flyTo({
                 center: [Number(e.target.dataset.lng), Number(e.target.dataset.lat)],
                 essential: true,

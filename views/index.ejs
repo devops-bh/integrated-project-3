@@ -173,11 +173,12 @@
             _marker.addTo(map)
             //markerListWidget.innerHTML += `<a style="display:block;" data-lat="${marker.lat}" data-lng="${marker.lng}" id="${marker.markerId}" class="listed-marker" href="#${marker.markerId}">Location-${state.markersListed}</a>`
             const markerListItem = document.createElement("div");
-            const textNode = document.createTextNode(`Location-${marker.marker_id}`);
+            const textNode = document.createTextNode(`Location-${marker.title}`);
             markerListItem.appendChild(textNode)
             markerListItem.setAttribute('data-lat', marker.lat)
             markerListItem.setAttribute('data-lng', marker.lng)
             markerListItem.setAttribute('data-id', marker.markerId)
+            markerListItem.setAttribute('data-title', marker.title)
             markerListItem.addEventListener("click", e => {
               e.preventDefault()
               console.log(e.target.dataset.id, marker.markerId) // will  likely yield ?, undefined 
@@ -254,13 +255,12 @@
 
           const coordinates = e.lngLat;
               // [refactor] there's likely a better way to organize this but this will do for now 
-              state.newMarkerToAdd = { lng: coordinates.lng, lat: coordinates.lat }
               let _marker = new mapboxgl.Marker({scale: 2}).setLngLat(coordinates)
             if (signed_in) {
                 _marker.setLngLat(coordinates).setPopup(new mapboxgl.Popup().setHTML(
                         '<div class="mb-3 mt-3">'+
                           '<label for="firstname" class="form-label">Title:</label>'+
-                          '<input type="text" class="form-control" id="title" placeholder="Enter Title" name="title" required>'+
+                          '<input type="text" class="form-control" class="title" placeholder="Enter Title" name="title" required>'+
                         '</div>'+
 
                         '<div class="mb-3 mt-3">'+
@@ -305,7 +305,9 @@
                               '</form>'+
                               '</div>'
                       ))
-                }
+
+                      state.newMarkerToAdd = { lng: coordinates.lng, lat: coordinates.lat  }
+                    }
                 _marker.addTo(map);
         });
         
@@ -323,8 +325,10 @@
         <% } %>
         function addMarker() { // [refactor] there may be a proper way of attaching event listeners to the popup but this was the quickest/easiest way 
           // [todo] use a similar (or better) approach to get the event details e.g. name of event 
+          const title = document.querySelector(".mapboxgl-popup-content").querySelector("input").value
+          state.newMarkerToAdd.title = title // isn't actually needed 
           const { lat, lng } = state.newMarkerToAdd
-          const data = { userId, lat, lng }
+          const data = { userId, lat, lng, title } // should probably change to user_id: userId but the server does this (thus expects userId)
           fetch("users/add-marker", {
                method: "POST", // or 'PUT'
                headers: {

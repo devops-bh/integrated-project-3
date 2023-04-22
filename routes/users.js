@@ -17,8 +17,9 @@ let markers = []; // [refactor] perhaps call these litter_event or litter_locati
 
 // maybe rename this route to something better e.g. add-litter-location 
 router.post('/add-marker', isSignedIn, async (req, res) => {
-  const { userId, lat, lng } = req.body
-  const newMarker = {user_id: userId, lat: req.body.lat, lng: req.body.lng, marker_id: uuid()}  
+  // [refactor] could probably refactor this so that properties can be added to the frontend without the need to touch the backend 
+  const { userId, lat, lng, title } = req.body
+  const newMarker = {user_id: userId, lat: req.body.lat, lng: req.body.lng, marker_id: uuid(), title: title}  
     fs.readFile(path.join(__dirname, "./database.json"), 'utf8', (err, data) => {
         if (err) console.log(err)
         const parsedData = JSON.parse(data)

@@ -106,7 +106,7 @@
         mapboxgl.accessToken = 'pk.eyJ1IjoiYmgzMDAiLCJhIjoiY2xlaWpsZW91MDI0dDQxbnI4aWNueTVneiJ9.u0cO3o-dzacQpUpt2rxLtA';
 
         // [refactor] this was the quickest/easiest way to implement getting the marker's details and sending them to the server, there may be alternative (better) approaches  
-          let state = { newMarkerToAdd: null, eventIdToJoin: null, markersListed: 0 }
+          let state = { newMarkerToAdd: null, eventIdToJoin: null, markersListed: 0, markerToMarkerAsClean: null }
           const signed_in = <%= signed_in %>;  
 
           // be careful, as one of these are obtained from the server; potential [refactor]
@@ -149,23 +149,29 @@
               _marker.setPopup(new mapboxgl.Popup().setHTML(
               `<div class="text-center" id="marker-${marker.marker_id}">
                   <button type="submit" class="btn btn-success" button style="background-color:blue" onclick="joinEvent()">Join Event</button>
-                  <button type="cancel" class="btn btn-danger">Remove</button>
+                  <button type="cancel" class="btn btn-danger" onclick="markEventAsClean()">Mark as Clean</button>
                   <button type="submit" id="add-marker" class="btn btn-success" >Clean</button>
                 </div>
                 `
-              ))
+                ))
+                _marker.getElement().setAttribute("data-id", marker.marker_id)
+              _marker.getElement().addEventListener("click", e => {
+                state.eventIdToMarkAsClean = marker.marker_id
+                console.log("Set state: ", state.eventIdToMarkAsClean)
+              })
             } else if (signed_in) {
               // I think we should just use the marker's default event listener which is triggered on map.on 
-              _marker.getElement().dataset.markerId = marker.markerId
+              _marker.getElement().dataset.markerId = marker.marker_id
               _marker.setPopup(new mapboxgl.Popup().setHTML(
-                `<div class="text-center" id="marker-popup-${marker.markerId}" dataset-markerId="${marker.markerId}"> 
-                <button id="marker-button-${marker.markerId}" type="submit" onclick="joinEvent()" dataset-userId="${marker.userId}" dataset-markerId="${marker.markerId}" class="btn btn-success" button style="background-color:blue">Join Event</button> 
+                `<div class="text-center" id="marker-popup-${marker.marker_id}" dataset-markerId="${marker.marker_id}"> 
+                <button id="marker-button-${marker.marker_id}" type="submit" onclick="joinEvent()" dataset-userId="${marker.user_id}" dataset-markerId="${marker.marker_id}" class="btn btn-success" button style="background-color:blue">Join Event</button> 
                 </div>`
+                
               ))
             } else {
               _marker.setPopup(new mapboxgl.Popup().setHTML(
                 // [refactor] maybe rename "marker" distinguish the marker data from the marker itself better 
-                `<div>${marker.userId}: Marker cotent
+                `<div>${marker.user_id}: Marker cotent
                     <br /><a href="/sign-in">Please sign in to participate</a>
                   </div>`
               ))
@@ -252,6 +258,12 @@
               state.eventIdToJoin = e.originalEvent.target.parentNode.parentNode.dataset.markerId
               return; 
             } 
+
+            if (is_staff && signed_in && e.originalEvent.target.parentNode.parentNode.classList.contains("mapboxgl-marker")) {
+              if (e.originalEvent.target.parentNode.parentNode.dataset.markerId == undefined) return;
+              return; 
+            } 
+
 
           const coordinates = e.lngLat;
               // [refactor] there's likely a better way to organize this but this will do for now 
@@ -355,7 +367,6 @@
               alert("Please sign into join events")
             }
             const markerId = state.eventIdToJoin 
-            console.log("MARKER ID: " + markerId)
             fetch("users/volunteer", {
               method: "POST", // or 'PUT'
               headers: {
@@ -374,6 +385,27 @@
               });            
           }
 
+          async function markEventAsClean() {
+            if (!signed_in && !is_staff) {
+              alert("Only staff can mark events as clean")
+            }
+            document.querySelectorAll(".mapboxgl-marker").forEach(marker => {
+             console.log(marker.dataset)
+             if (marker.dataset.id == state.eventIdToMarkAsClean) {
+               document.querySelectorAll(".mapboxgl-popup").forEach(popup => popup.remove())
+               marker.remove()
+             }
+            })
+            await fetch("users/markEventAsClean", {
+              method: "POST", // or 'PUT'
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                marker_id: state.eventIdToMarkAsClean
+              }),
+            })
+          } 
     </script>
   </body>
 </html>

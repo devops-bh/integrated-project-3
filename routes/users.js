@@ -80,4 +80,41 @@ router.post("/volunteer", isSignedIn, (req, res) => {
       })
 })
 
+router.post("/markEventAsClean", isSignedIn, (req, res) => {
+  console.log(req.body) 
+  fs.readFile(path.join(__dirname, "./database.json"), 'utf8', (err, data) => {
+    if (err) console.log(err)
+        let parsedData = JSON.parse(data)
+    parsedData.litter_locations.map((litter_location, i) => {
+      if (litter_location.marker_id == req.body.marker_id) {
+        //parsedData.litter_locations.remove(i)
+        return;
+      }
+    })
+    /* 
+    parsedData.volunteers.map((volnteer, i) => {
+      if (volnteer.marker_id == req.body.marker_id) {
+        parsedData.users.map(user => {
+          if (user.user_id == volnteer.user_id) {
+            user.score += 100
+            parsedData.volnteers.remove(i)
+          }
+        })
+      }
+    })
+    */ 
+    const newData = parsedData
+    fs.writeFile(path.join(__dirname, "./database.json"), JSON.stringify(newData), err => {
+      if (err) {
+        console.error(err);
+        // [todo] res.render or redirect with "something went wrong" message 
+        res.send(err)
+      } else {
+            console.log(req.body.marker_id )
+            res.send({msg: "success"})
+          }
+        });
+      })
+})
+
 module.exports = router;

@@ -39,7 +39,7 @@ router.post('/register', async (req, res) => {
         if (err) console.log(err)
         const parsedData = JSON.parse(data)
         const _uuid = uuid() 
-        parsedData.users.push({user_id: _uuid, email, password: hashedPassword}) 
+        parsedData.users.push({user_id: _uuid, email, password: hashedPassword, score: 0}) 
         req.session.user_id = _uuid
         //converting data from user to JSON? or parser send data to other to show it is ready
         const newData = parsedData

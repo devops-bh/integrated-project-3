@@ -87,34 +87,32 @@ router.post("/markEventAsClean", isSignedIn, (req, res) => {
         let parsedData = JSON.parse(data)
     parsedData.litter_locations.map((litter_location, i) => {
       if (litter_location.marker_id == req.body.marker_id) {
-        //parsedData.litter_locations.remove(i)
+        parsedData.litter_locations.splice(i, 1);
         return;
       }
     })
-    /* 
+
     parsedData.volunteers.map((volnteer, i) => {
       if (volnteer.marker_id == req.body.marker_id) {
         parsedData.users.map(user => {
           if (user.user_id == volnteer.user_id) {
             user.score += 100
-            parsedData.volnteers.remove(i)
+            console.log("USER SCORE: ", user.score)
+            parsedData.volunteers.splice(i, 1); 
           }
         })
       }
     })
-    */ 
     const newData = parsedData
-    fs.writeFile(path.join(__dirname, "./database.json"), JSON.stringify(newData), err => {
-      if (err) {
-        console.error(err);
-        // [todo] res.render or redirect with "something went wrong" message 
-        res.send(err)
-      } else {
-            console.log(req.body.marker_id )
-            res.send({msg: "success"})
-          }
-        });
-      })
-})
+      fs.writeFile(path.join(__dirname, "./database.json"), JSON.stringify(newData), err => {
+        if (err) {
+          console.error(err);
+          // [todo] res.render or redirect with "something went wrong" message 
+          res.send(err)
+        } else {
+          res.send({msg: "success"})
+        }
+        })
+})})
 
 module.exports = router;

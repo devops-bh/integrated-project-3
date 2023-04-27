@@ -10,10 +10,11 @@ const uuid = require("uuid").v4
 /* GET home page. */
 router.get('/', (req, res) => {
   if (req.session.signed_in == true) {
-    res.render('index', { title: 'Litter Map', signed_in: true, user_id: req.session.user_id, is_staff: req.session.is_staff});
-    console.log("Signed in was navigated to the index view")
+    // todo: read score from file even if its a hacky solution 
+    console.log("index; Score: ", req.session.score)
+    res.render('index', { title: 'Litter Map', signed_in: true, user_id: req.session.user_id, is_staff: req.session.is_staff, score: req.session.score});
   } else {
-    res.render('index', { title: 'Litter Map', signed_in: false, user_id: -1, is_staff: req.session.is_staff});
+    res.render('index', { title: 'Litter Map', signed_in: false, user_id: -1, is_staff: req.session.is_staff, score: null});
   }
 });
 
@@ -41,7 +42,7 @@ router.post('/register', async (req, res) => {
         const _uuid = uuid() 
         parsedData.users.push({user_id: _uuid, email, password: hashedPassword, score: 0}) 
         req.session.user_id = _uuid
-        //converting data from user to JSON? or parser send data to other to show it is ready
+        req.session.score = null
         const newData = parsedData
         fs.writeFile(path.join(__dirname, "./database.json"), JSON.stringify(newData), err => {
           if (err) {
@@ -89,7 +90,8 @@ router.post('/sign-in', isSignedIn, (req, res) => {
             if (result) {
               req.session.signed_in = true 
               req.session.user_id = user.user_id
-              console.log("user has just signed in: ", result) 
+              req.session.score = user.score
+              console.log("Signed in: session score: ", req.session.score, " | ", user.score) 
               //res.render('index', {title: `signed in as ${req.session.signed_in ? 'ross ': 'anon'}`, signed_in: req.session.signed_in, /* [todo] user.user_id */}) 
               // [refactor] wasn't sure if these can be handled with "&&" rather than a nested if 
               if (user.hasOwnProperty("is_staff")) {

@@ -95,27 +95,33 @@
 
 </head>
 <body>
-  <%- include('./partials/navbar.ejs', {signed_in: signed_in}) %>
+  <%- include('./partials/navbar.ejs', {signed_in, score}) %>
   <input type="text" id="marker-list-filter-input" placeholder="Search for names..">
-    <div class="marker-list-container">
-      <div class="marker-list-widget" id="markers"></div>
-    </div>
-    <div id="map"></div>
-    <script>
-      const markerListWidget = document.querySelector("#markers")
-        mapboxgl.accessToken = 'pk.eyJ1IjoiYmgzMDAiLCJhIjoiY2xlaWpsZW91MDI0dDQxbnI4aWNueTVneiJ9.u0cO3o-dzacQpUpt2rxLtA';
+  <div class="marker-list-container">
+    <div class="marker-list-widget" id="markers"></div>
+  </div>
+  <div id="map"></div>
+  <script>
+    const markerListWidget = document.querySelector("#markers")
+    mapboxgl.accessToken = 'pk.eyJ1IjoiYmgzMDAiLCJhIjoiY2xlaWpsZW91MDI0dDQxbnI4aWNueTVneiJ9.u0cO3o-dzacQpUpt2rxLtA';
 
         // [refactor] this was the quickest/easiest way to implement getting the marker's details and sending them to the server, there may be alternative (better) approaches  
-          let state = { newMarkerToAdd: null, eventIdToJoin: null, markersListed: 0, markerToMarkerAsClean: null }
-          const signed_in = <%= signed_in %>;  
-
-          // be careful, as one of these are obtained from the server; potential [refactor]
-            let is_staff = false; 
-            <% if (is_staff) { %>
-                is_staff = true
+        let state = { newMarkerToAdd: null, eventIdToJoin: null, markersListed: 0, markerToMarkerAsClean: null }
+        const signed_in = <%= signed_in %>;  
+        
+        // be careful, as one of these are obtained from the server; potential [refactor]
+        let is_staff = false; 
+        <% if (is_staff) { %>
+          is_staff = true;
+          <% } %>
+        
+        let score = undefined; 
+        <% if (score != null) { %>
+            score = 0;
+            document.querySelector(".score").innerText = score
             <% } %>
-            console.log("This user is staff? ", is_staff)
-
+          console.log("SCORE: ", score)  
+            
         const map = new mapboxgl.Map({
             container: 'map', // container ID
             // Choose from Mapbox's core styles, or make your own style with Mapbox Studio

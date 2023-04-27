@@ -165,14 +165,76 @@
               })
             } else if (signed_in) {
               // I think we should just use the marker's default event listener which is triggered on map.on 
-              _marker.getElement().dataset.markerId = marker.marker_id
+              /* 
+              < button id = "marker-button-${marker.marker_id}" type = "submit" onclick = "joinEvent()" dataset - userId="${marker.user_id}" dataset - markerId="${marker.marker_id}" class="btn btn-success" button style = "background-color:blue" > Join Event</ > 
+              */ 
+             // frustrating, setHTML only permits a string of HTML https://stackoverflow.com/questions/1750815/get-the-string-representation-of-a-dom-node
+             let outerDiv = document.createElement("div")
+             let joinEventButton = document.createElement("button")
+             joinEventButton.id = "join-event-button"
+              joinEventButton.classList.add("btn")
+              joinEventButton.classList.add("btn-success")
+              joinEventButton.classList.add("text-center")
+              joinEventButton.style.cssText = "background-color:blue;display:block;position:relative;top:12px;margin:0 auto;"
+              joinEventButton.appendChild(document.createElement("p").appendChild(document.createTextNode("Volunteer")))
+              joinEventButton.setAttribute("data-markerId", marker.marker_id) // be careful as the attribute name may be entirely lowercase when using dataset.etc
+              joinEventButton.classList.add("join-event-button") 
+              let containerDiv = document.createElement("div")
+              containerDiv.setAttribute("id", "marker-popup-"+marker.marker_id)
+              containerDiv.setAttribute("data-markerId", marker.marker_id)  // be careful as the attribute name may be entirely lowercase when using dataset.etc
+              containerDiv.classList.add("text-center")
+              // [todo] have the width stretch for longer text 
+              containerDiv.style.cssText = "padding-left:12vw;padding-right:12vw;font-size:32px;" 
+              containerDiv.appendChild(document.createElement("strong").appendChild(document.createTextNode(marker.title))) 
+              containerDiv.appendChild(joinEventButton)
+              let isVolunteerTextEl = document.createElement("p")
+              isVolunteerTextEl.appendChild(document.createTextNode("Thankyou for volunteering"))
+              containerDiv.appendChild(isVolunteerTextEl)
+              isVolunteerTextEl.classList.add("ty-for-volunteering")
+              isVolunteerTextEl.classList.add("d-none")
+              outerDiv.appendChild(containerDiv)
+              
+          //document.body.insertBefore(newDiv, currentDiv);
+          
+          _marker.getElement().dataset.markerId = marker.marker_id
+          _marker.setPopup(new mapboxgl.Popup().setHTML(outerDiv.innerHTML))
+          
+          // https://stackoverflow.com/a/34896387
+          document.addEventListener("click", function (e) {
+            const target = e.target.closest("#join-event-button"); // Or any other selector.
+            if (target) {
+              //console.log("joinevent: ", target)
+              /*
+                  joinEvent()
+                  Array.from(e.target.parentNode.childNodes).map(childNode => {
+                    childNode.classList.remove("d-none")
+                  })
+                  */
+                 Array.from(document.querySelectorAll(".join-event-button")).map(_joinEventButton => {
+                   if (target.dataset["markerid"] == marker.marker_id) {
+                     _joinEventButton.parentElement.querySelector(".ty-for-volunteering").classList.remove("d-none")
+                     joinEvent()
+                     target.remove()
+                   }
+                 })
+                }
+              }); 
+
+              /* // can delete this, just keeping it as a reference 
               _marker.setPopup(new mapboxgl.Popup().setHTML(
                 `<div class="text-center" id="marker-popup-${marker.marker_id}" dataset-markerId="${marker.marker_id}"> 
                   <p>${marker.title}</p>
+                </div>`
+                ))
+               // I think we should just use the marker's default event listener which is triggered on map.on 
+              _marker.getElement().dataset.markerId = marker.marker_id
+              _marker.setPopup(new mapboxgl.Popup().setHTML(
+                `<div class="text-center" id="marker-popup-${marker.marker_id}" dataset-markerId="${marker.marker_id}"> 
+                <p>${marker.title}</p>
                 <button id="marker-button-${marker.marker_id}" type="submit" onclick="joinEvent()" dataset-userId="${marker.user_id}" dataset-markerId="${marker.marker_id}" class="btn btn-success" button style="background-color:blue">Join Event</button> 
                 </div>`
-                
               ))
+              */
             } else {
               _marker.setPopup(new mapboxgl.Popup().setHTML(
                 // [refactor] maybe rename "marker" distinguish the marker data from the marker itself better 

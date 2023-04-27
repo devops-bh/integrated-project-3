@@ -12,9 +12,9 @@ router.get('/', (req, res) => {
   if (req.session.signed_in == true) {
     // todo: read score from file even if its a hacky solution 
     console.log("index; Score: ", req.session.score)
-    res.render('index', { title: 'Litter Map', signed_in: true, user_id: req.session.user_id, is_staff: req.session.is_staff, score: req.session.score});
+  res.render('index', { title: 'Litter Map', signed_in: true, user_id: req.session.user_id, is_staff: req.session.is_staff , score: req.session.score});
   } else {
-    res.render('index', { title: 'Litter Map', signed_in: false, user_id: -1, is_staff: req.session.is_staff, score: null});
+  res.render('index', { title: 'Litter Map', signed_in: false, user_id: -1, is_staff: req.session.is_staff , score: null });
   }
 });
 

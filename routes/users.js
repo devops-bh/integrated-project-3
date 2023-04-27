@@ -41,6 +41,9 @@ router.post('/add-marker', isSignedIn, async (req, res) => {
 
 
 router.get("/events", (req, res) => {
+  /* 
+  here I might just read from file based on user id which will likely be a session variable & constantly read 
+  */
   res.writeHead(200, {
     Connection: "keep-alive",
     "Content-Type": "text/event-stream",
@@ -92,12 +95,12 @@ router.post("/markEventAsClean", isSignedIn, (req, res) => {
       }
     })
 
-    parsedData.volunteers.map((volnteer, i) => {
-      if (volnteer.marker_id == req.body.marker_id) {
+    parsedData.volunteers.map((volunteer, i) => {
+      if (volunteer.marker_id == req.body.marker_id) {
         parsedData.users.map(user => {
-          if (user.user_id == volnteer.user_id) {
+          if (user.user_id == volunteer.user_id) {
             user.score += 100
-            console.log("USER SCORE: ", user.score)
+            console.log("USER SCORE: ", user.score) // may be logged 3 times but doubt this matters 
             parsedData.volunteers.splice(i, 1); 
           }
         })

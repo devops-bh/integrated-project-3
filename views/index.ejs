@@ -100,6 +100,7 @@
   <div class="marker-list-container">
     <div class="marker-list-widget" id="markers"></div>
   </div>
+
   <div id="map"></div>
   <script>
     const markerListWidget = document.querySelector("#markers")
@@ -114,14 +115,11 @@
         <% if (is_staff) { %>
           is_staff = true;
           <% } %>
+        console.log("IS STAFF: ", is_staff) 
         
-        let score = undefined; 
-        <% if (score != null) { %>
-            score = 0;
-            document.querySelector(".score").innerText = score
-            <% } %>
-          console.log("SCORE: ", score)  
-            
+        let score = 0;
+        console.log("Score: ", score)  
+
         const map = new mapboxgl.Map({
             container: 'map', // container ID
             // Choose from Mapbox's core styles, or make your own style with Mapbox Studio

@@ -152,9 +152,9 @@
             if (is_staff && signed_in) {
               _marker.setPopup(new mapboxgl.Popup().setHTML(
               `<div class="text-center" id="marker-${marker.marker_id}">
+                <p>${marker.title}</p>
                   <button type="submit" class="btn btn-success" button style="background-color:blue" onclick="joinEvent()">Join Event</button>
-                  <button type="cancel" class="btn btn-danger" onclick="markEventAsClean()">Mark as Clean</button>
-                  <button type="submit" id="add-marker" class="btn btn-success" >Clean</button>
+                  <button type="cancel" class="btn btn-success" onclick="markEventAsClean()">Mark as Clean</button>
                 </div>
                 `
                 ))
@@ -168,6 +168,7 @@
               _marker.getElement().dataset.markerId = marker.marker_id
               _marker.setPopup(new mapboxgl.Popup().setHTML(
                 `<div class="text-center" id="marker-popup-${marker.marker_id}" dataset-markerId="${marker.marker_id}"> 
+                  <p>${marker.title}</p>
                 <button id="marker-button-${marker.marker_id}" type="submit" onclick="joinEvent()" dataset-userId="${marker.user_id}" dataset-markerId="${marker.marker_id}" class="btn btn-success" button style="background-color:blue">Join Event</button> 
                 </div>`
                 
@@ -176,6 +177,7 @@
               _marker.setPopup(new mapboxgl.Popup().setHTML(
                 // [refactor] maybe rename "marker" distinguish the marker data from the marker itself better 
                 `<div>${marker.user_id}: Marker cotent
+                  <p>${marker.title}</p>
                     <br /><a href="/sign-in">Please sign in to participate</a>
                   </div>`
               ))

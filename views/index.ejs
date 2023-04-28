@@ -87,6 +87,26 @@
                 overflow-x: hidden;
               }
 
+              @media only screen and (max-width: 600px) {
+                @keyframes slidein {
+                  from {
+                    transform: translateY(0%);
+                  }
+
+                  to {
+                    transform: translateY(100%);
+                  }
+                }
+                #marker-list-filter-input {
+                      top: 18vh;
+                      animation: slidein 2s forwards; 
+                }
+                .marker-list-container { 
+                    top: 18.2vh;
+                    animation: slidein 2s forwards; 
+                }
+              }
+
 
             .is-hidden {
               display: none !important;

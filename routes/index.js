@@ -67,12 +67,6 @@ router.get('/Blog', (req, res) => {
   res.render('Blog', { title: 'Blog', signed_in: true })
 }) 
 
-// for user profile page
-router.get('/userprofile', (req, res) => {
-  res.render('userprofile', { title: 'userprofile', signed_in: true })
-}) 
-
-
 // perhaps this belongs in routes/users.js 
 router.get('/sign-in', (req, res) => {
   res.render('sign-in', { title: 'Sign in', signed_in: false })

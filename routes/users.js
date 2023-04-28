@@ -118,4 +118,10 @@ router.post("/markEventAsClean", isSignedIn, (req, res) => {
         })
 })})
 
+// for user profile page
+router.get('/userprofile', isSignedIn, (req, res) => {
+  res.render('userprofile', { title: 'userprofile', signed_in: true, score: req.session.score })
+}) 
+
+
 module.exports = router;

@@ -321,6 +321,9 @@
               alert("Please sign in");
               return; 
             } 
+            if (e.originalEvent.target.parentNode.parentNode.classList.contains("mapboxgl-marker")) {
+              return;
+            }
 
             if (signed_in && e.originalEvent.target.parentNode.parentNode.classList.contains("mapboxgl-marker")) {
               if (e.originalEvent.target.parentNode.parentNode.dataset.markerId == undefined) return;

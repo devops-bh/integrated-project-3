@@ -87,6 +87,26 @@
                 overflow-x: hidden;
               }
 
+              @media only screen and (max-width: 600px) {
+                @keyframes slidein {
+                  from {
+                    transform: translateY(0%);
+                  }
+
+                  to {
+                    transform: translateY(100%);
+                  }
+                }
+                #marker-list-filter-input {
+                      top: 18vh;
+                      animation: slidein 2s forwards; 
+                }
+                .marker-list-container { 
+                    top: 18.2vh;
+                    animation: slidein 2s forwards; 
+                }
+              }
+
 
             .is-hidden {
               display: none !important;
@@ -367,7 +387,11 @@
                         '<input type="number" class="form-control" id="peopleN" placeholder="Enter Number" name="peopleN" required>'+
                         '</div>'+
                         '<div class="mb-3 mt-3">'+
-                        
+                        '<div class="mb-3">'+
+                          '<label for="uploadImage" class="form-label">Add image:</label>'+
+                          '<label for="formFileSm" class="form-label"></label>'+
+                          '<input class="form-control" id="formFileMd" type="file">'+                                           
+                        '</div>'+
 
                         '<div class="mb-3 mt-3">'+
                         '<label for="firstname" class="form-label">Amount Of Garbage:</label>'+
@@ -384,8 +408,7 @@
                             '<input class="form-check-input" type="radio" id="inlineCheckbox3" name="optradio" value="option3">'+
                             '<label class="form-check-label" for="inlineCheckbox3">Large</label>'+
                             '</div>'+
-                            '</div>'+
-                            
+                            '</div>'+                            
                             
                             '<div class="text-center">'+
                               '<button type="cancel" class="btn btn-danger" onclick="removeMarker()">Cancel</button>'+

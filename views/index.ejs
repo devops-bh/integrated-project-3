@@ -209,16 +209,22 @@
               containerDiv.setAttribute("data-markerId", marker.marker_id)  // be careful as the attribute name may be entirely lowercase when using dataset.etc
               containerDiv.classList.add("text-center")
               // [todo] have the width stretch for longer text 
-              containerDiv.style.cssText = "margin-left:2vw;margin-right:2vw;font-size:24px;"
+              containerDiv.style.cssText = "margin-left:2vw;margin-right:2vw;margin-bottom: 0.5vw; font-size:20px;"
               // todo: re-add the title 
               containerDiv.classList.add(".signed_in_popupContainer")
               containerDiv.appendChild(document.createElement("strong").appendChild(document.createTextNode(marker.title))) 
               containerDiv.appendChild(document.createElement("br")) 
+              containerDiv.appendChild(document.createElement("br")) 
+              const span = document.createElement("span");
+              span.style.fontSize = "smaller";
+              span.appendChild(document.createTextNode("Reported on date:"));
+              containerDiv.appendChild(span);
+              containerDiv.appendChild(document.createElement("br"))  
               containerDiv.appendChild(document.createElement("strong").appendChild(document.createTextNode(marker.date))) 
               console.log("Date: ", marker.date)
               containerDiv.appendChild(joinEventButton)
               let isVolunteerTextEl = document.createElement("strong")
-              isVolunteerTextEl.appendChild(document.createTextNode("Thankyou for volunteering"))
+              isVolunteerTextEl.appendChild(document.createTextNode("Thank you for volunteering!"))
               isVolunteerTextEl.style.cssText = "display:block;font-size:20px;margin-top:12px;"
               containerDiv.appendChild(isVolunteerTextEl)
               isVolunteerTextEl.classList.add("ty-for-volunteering")

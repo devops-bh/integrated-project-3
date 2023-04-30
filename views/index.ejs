@@ -69,22 +69,25 @@
 
               #marker-list-filter-input {
                 position: fixed;
-                top: 11vh;
-                left: 3.5vw;
+                bottom: 3%;
+                left: 50%;
+                transform: translateX(-50%);
                 z-index: 100;
-                width: 16vw;
+                width: 40vw;
               }
+
               .marker-list-container {
-                position: absolute;
-                top: 14vh;
-                left: 3.5vw;
+                position: fixed;
+                bottom: 30%;
+                left: 17%;
                 z-index: 100;
-                width: 20vw;
-                border: 2px solid black; 
+                width: max-content;
+                border: 2px solid black;
                 background-color: #ececec;
-                max-height: 12vh; 
+                max-height: 30vh;
                 overflow-y: scroll;
                 overflow-x: hidden;
+                display: none; /* add this line to hide the container by default */
               }
 
               @media only screen and (max-width: 600px) {
@@ -97,16 +100,12 @@
                     transform: translateY(100%);
                   }
                 }
-                #marker-list-filter-input {
-                      top: 18vh;
-                      animation: slidein 2s forwards; 
-                }
+                
                 .marker-list-container { 
-                    top: 18.2vh;
-                    animation: slidein 2s forwards; 
+                    bottom: 40%;
+                    animation: slidein 0.5s forwards; 
                 }
               }
-
 
             .is-hidden {
               display: none !important;
@@ -120,13 +119,25 @@
 </head>
 <body>
   <%- include('./partials/navbar.ejs', {signed_in, score}) %>
-  <input type="text" id="marker-list-filter-input" placeholder="Search for names..">
-  <div class="marker-list-container">
-    <div class="marker-list-widget" id="markers"></div>
+  <button class="btn btn-primary" id="marker-list-filter-input">List Locations</button>
+  <div class="marker-list-container list-group" id="marker-list-container">
+    <div class="marker-list-widget list-group-item" id="markers"></div>
   </div>
 
   <div id="map"></div>
   <script>
+    //********************************************************************
+    const showHideButton = document.getElementById('marker-list-filter-input');
+    const markerListContainer = document.getElementById('marker-list-container');
+
+    showHideButton.addEventListener('click', () => {
+      if (markerListContainer.style.display === 'none') {
+        markerListContainer.style.display = 'block';
+      } else {
+        markerListContainer.style.display = 'none';
+      }
+    });
+    //********************************************************************
     const markerListWidget = document.querySelector("#markers")
     mapboxgl.accessToken = 'pk.eyJ1IjoiYmgzMDAiLCJhIjoiY2xlaWpsZW91MDI0dDQxbnI4aWNueTVneiJ9.u0cO3o-dzacQpUpt2rxLtA';
 
@@ -388,41 +399,13 @@
                         '<input type="date" class="form-control" id="date" name="date" required>'+
                         '</div>'+
 
-                        '<div class="mb-3 mt-3">' +
-                        '<label for="firstname" class="form-label">Number of people needed:</label>' +
-                        '<input type="number" class="form-control" id="peopleN" placeholder="Enter Number" name="peopleN" required>'+
-                        '</div>'+
-                        '<div class="mb-3 mt-3">'+
-                        '<div class="mb-3">'+
-                          '<label for="uploadImage" class="form-label">Add image:</label>'+
-                          '<label for="formFileSm" class="form-label"></label>'+
-                          '<input class="form-control" id="formFileMd" type="file">'+                                           
-                        '</div>'+
-
-                        '<div class="mb-3 mt-3">'+
-                        '<label for="firstname" class="form-label">Amount Of Garbage:</label>'+
-                        '<br>'+
-                        '<div class="form-check form-check-inline">'+
-                          '<input  class="form-check-input" type="radio" id="inlineCheckbox1" name="optradio" value="option1">'+
-                          '<label class="form-check-label" for="inlineCheckbox1">Small</label>'+
-                        '</div>'+
-                        '<div class="form-check form-check-inline">'+
-                          '<input  class="form-check-input" type="radio" id="inlineCheckbox2" name="optradio" value="option2">'+
-                          '<label class="form-check-label" for="inlineCheckbox2">Medium</label>'+
-                          '</div>'+
-                          '<div class="form-check form-check-inline">'+
-                            '<input class="form-check-input" type="radio" id="inlineCheckbox3" name="optradio" value="option3">'+
-                            '<label class="form-check-label" for="inlineCheckbox3">Large</label>'+
-                            '</div>'+
-                            '</div>'+                            
-                            
-                            '<div class="text-center">'+
+                        '<div class="text-center">'+
                               '<button type="cancel" class="btn btn-danger" onclick="removeMarker()">Cancel</button>'+
                               '<button type="submit" id="add-marker" onClick="addMarker()" class="btn btn-success" >Submit</button>'+
                               '</div>'+
                               
                               '</form>'+
-                              '</div>'
+                              '</div>'    
                       ))
 
                       state.newMarkerToAdd = { lng: coordinates.lng, lat: coordinates.lat  }

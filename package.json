@@ -6,7 +6,8 @@
     "start": "node ./bin/www",
     "node-watch": "nodemon ./bin/www",
     "deploy": "node deploy.js",
-    "test-sign-in": "node tests/confirm-user-can-sign-in.mjs"
+    "test-sign-in": "node tests/confirm-user-can-sign-in.mjs", 
+    "generate-staff": "node ./routes/generate-staff.js"
   },
   "dependencies": {
     "bcrypt": "^5.1.0",
